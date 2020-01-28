@@ -22,6 +22,7 @@ DROP TABLE If EXISTS bloque;
 DROP TABLE If EXISTS vidrio;
 DROP TABLE If EXISTS analogo;
 DROP TABLE If EXISTS digital;
+DROP TABLE IF EXISTS bono;
 
 -- Creando tablas 
 CREATE TABLE usuario
@@ -73,7 +74,7 @@ CREATE TABLE cliente
 	Cli_email	VARCHAR(100)	NULL,
 	Cli_ciu		VARCHAR(25)	NOT NULL,
 	Cli_dir		VARCHAR(100)	NOT NULL,
-	Cli_idart	VARCHAR(45)	NOT NULL,
+	Cli_idart	VARCHAR(45) NULL,
 	PRIMARY KEY(Cli_nit)
 ) ENGINE=InnoDB;
 
@@ -99,7 +100,6 @@ CREATE TABLE orden_compra
 	PRIMARY KEY(Ordc_id)
 ) ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS bono;
 CREATE TABLE bono
 (
 	bon_Cli_emp VARCHAR(40) NOT NULL,

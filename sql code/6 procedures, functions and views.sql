@@ -32,7 +32,7 @@ DELIMITER ;
 /*SIGNUP*/
 DROP PROCEDURE IF EXISTS createClientUser;
 DELIMITER $$
-CREATE PROCEDURE createUser(
+CREATE PROCEDURE createClientUser(
 	IN ccnit VARCHAR(50),
     IN nick VARCHAR(50),
     IN contra VARCHAR(50),
@@ -54,8 +54,7 @@ CREATE PROCEDURE createClient(
 	IN fax		VARCHAR(50),
 	IN email	VARCHAR(100),
 	IN ciu		VARCHAR(25),
-	IN dir		VARCHAR(100),
-	IN idart	VARCHAR(45))
+	IN dir		VARCHAR(100))
 BEGIN
 	INSERT INTO cliente(
 			Cli_nit,
@@ -65,12 +64,16 @@ BEGIN
 			Cli_fax,
 			Cli_email,
 			Cli_ciu,
-			Cli_dir,
-			Cli_idart
-    ) VALUES(nit, emp, carg, tel, fax, email, ciu, dir, idart);
+			Cli_dir
+    ) VALUES(nit, emp, carg, tel, fax, email, ciu, dir);
 END $$
 DELIMITER ;
 
+/*
+########################################################################################################################
+########################################################################################################################
+########################################################################################################################
+*/
 
 DROP VIEW IF EXISTS vt2;
 DROP VIEW IF EXISTS vt3;
@@ -80,10 +83,10 @@ DROP VIEW IF EXISTS vt5;
 /* Vistas: vt2 similar a una factura resumen del cliente 
  vt3 promedio de dinero pagado,número de servicios realizados, cliente, teléfono */
 
-CREATE VIEW vt2 AS SELECT Cli_emp,Cli_mail,Cli_tel,Ordc_preciotol,Ordc_fec FROM cliente JOIN item_cliente ON ItmC_Cli_nit=Cli_nit
+CREATE VIEW vt2 AS SELECT Cli_emp,Cli_email,Cli_tel,Ordc_preciotol,Ordc_fec FROM cliente JOIN item_cliente ON ItmC_Cli_nit=Cli_nit
 	JOIN orden_compra_espec ON OrdEs_ItemC_id=ItmC_id JOIN orden_compra ON Ordc_id=OrdEs_Ordc_id; 
 
-CREATE VIEW vt3 AS SELECT Cli_emp,Cli_mail,Cli_tel,AVG(Ordc_preciotol) AS prom,SUM(Ordc_preciotol) AS total, COUNT(Cli_emp) AS serv FROM vt2 GROUP BY Cli_emp,Cli_mail,Cli_tel; 
+CREATE VIEW vt3 AS SELECT Cli_emp,Cli_email,Cli_tel,AVG(Ordc_preciotol) AS prom,SUM(Ordc_preciotol) AS total, COUNT(Cli_emp) AS serv FROM vt2 GROUP BY Cli_emp,Cli_email,Cli_tel; 
 
 /* Procedimiento de descuentos: Otorga un bono de descuento por cierto valor pagado en total de servicios */
 DELIMITER $$

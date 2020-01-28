@@ -4,6 +4,7 @@ select login('juan','pamblo');
 CALL login('juan','padblo');
 select "hola";
 select * from usuario;
+select * from cliente;
 
 
 

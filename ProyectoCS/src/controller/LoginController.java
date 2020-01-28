@@ -24,10 +24,7 @@ public class LoginController implements ActionListener {
     
     public boolean loginAction(String ccnit, String password){
         this.persistence.openConnection();
-        int userId = this.loginQueries.checkUser(
-                this.persistence.getConnection(),
-                String.valueOf(this.loginView.txtCCNIT.getText()),
-                String.valueOf(this.loginView.txtPassword.getText()));
+        int userId = this.loginQueries.checkUser(this.persistence.getConnection(), ccnit, password);
         if(userId == 0){
             System.out.println("wrong ccnit or password");
             return false;
@@ -44,8 +41,8 @@ public class LoginController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == this.loginView.btnLogin){
-            loginAction(String.valueOf(this.loginView.txtCCNIT.getText()),
-                        String.valueOf(this.loginView.txtPassword.getText()));
+            loginAction(this.loginView.txtCCNIT.getText(),
+                        String.valueOf(this.loginView.txtPassword.getPassword()));
         } else if(e.getSource() == this.loginView.btnSignup){
             this.loginView.dispose();
             new ClientSignupController();

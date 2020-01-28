@@ -9,10 +9,10 @@ public class ClientModel {
     private String email;
     private String city;
     private String address;
-    private String idArt;
+    private String idArt = null;
 
     // for show his information
-    public ClientModel(String nit, String company, String job, String phone, String fax, String email, String city, String address, String idArt) {
+    public ClientModel(String nit, String company, String job, String phone, String fax, String email, String city, String address) {
         this.nit = nit;
         this.company = company;
         this.job = job;
@@ -21,7 +21,6 @@ public class ClientModel {
         this.email = email;
         this.city = city;
         this.address = address;
-        this.idArt = idArt;
     }    
     
     public String getNit() {
