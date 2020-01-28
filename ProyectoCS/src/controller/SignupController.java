@@ -14,6 +14,7 @@ public class SignupController implements ActionListener {
         persistence.setDbUser("client", "clientPassword");
         System.out.println("SignupController called");
         this.signupView.btnSignup.addActionListener(this);
+        this.signupView.btnBack.addActionListener(this);
         this.signupView.setTitle("Registrarse");
         this.signupView.setLocationRelativeTo(null);
         this.signupView.setVisible(true);
@@ -26,9 +27,13 @@ public class SignupController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        if(e.getSource() == this.clientView.btnLogout){
-//            this.clientView.dispose();
-//            new LoginController();
-//        }
+        if(e.getSource() == this.signupView.btnSignup){
+            this.signupView.dispose();
+            new LoginController();
+            // meter registro y hacer login
+        } else if(e.getSource() == this.signupView.btnBack){
+            this.signupView.dispose();
+            new LoginController();
+        }
     }
 }

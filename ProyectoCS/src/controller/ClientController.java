@@ -18,7 +18,7 @@ public class ClientController implements ActionListener {
         persistence.setDbUser("client", "clientPassword");
         System.out.println("ClientController called");
         this.clientView.btnLogout.addActionListener(this);
-        this.clientView.setTitle("Client");
+        this.clientView.setTitle("Cliente");
         this.clientView.setLocationRelativeTo(null);
         this.clientView.setVisible(true);
         this.personalizeView();

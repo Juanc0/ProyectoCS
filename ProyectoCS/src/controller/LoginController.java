@@ -17,7 +17,7 @@ public class LoginController implements ActionListener {
         persistence.setDbUser("auth", "authPassword");
         this.loginView.btnLogin.addActionListener(this);
         this.loginView.btnSignup.addActionListener(this);
-        this.loginView.setTitle("Login");
+        this.loginView.setTitle("Iniciar Sesión");
         this.loginView.setLocationRelativeTo(null);
         this.loginView.setVisible(true);
     }
@@ -40,7 +40,8 @@ public class LoginController implements ActionListener {
             }
             this.persistence.closeConnection();
         } else if(e.getSource() == this.loginView.btnSignup){
-            System.out.println("ventana de registro de usuario/cliente");
+            this.loginView.dispose();
+            new SignupController();
         }
     }
 }
