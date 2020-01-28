@@ -1,6 +1,6 @@
 package model;
 
-public class User {
+public class UserModel {
     private int id;
     private String username;
     private String rol;
@@ -9,11 +9,10 @@ public class User {
     private int adviserId;
     private int labId;
 
-    public User() {
+    public UserModel() {
     }
     
-    
-    public User(int id, String username, String rol, String status, String clientId, int adviserId, int labId) {
+    public UserModel(int id, String username, String rol, String status, String clientId, int adviserId, int labId) {
         this.id = id;
         this.username = username;
         this.rol = rol;

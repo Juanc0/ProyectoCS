@@ -646,7 +646,8 @@ CREATE USER '4Karnes'@'localhost' IDENTIFIED BY 'cli214';
 
 -- Asignación de permisos a los usuarios
 /*GRANT SELECT ON proyectocs.usuario TO 'auth'@'localhost';*/
-GRANT EXECUTE ON PROCEDURE login TO 'auth'@'localhost';
+GRANT EXECUTE ON PROCEDURE checkUser TO 'auth'@'localhost';
+GRANT EXECUTE ON PROCEDURE getUser TO 'auth'@'localhost';
 
 GRANT ALL PRIVILEGES ON proyectocs.cliente TO 'gerente'@'localhost';
 GRANT ALL PRIVILEGES ON proyectocs.asesor TO 'gerente'@'localhost';
@@ -706,20 +707,9 @@ FLUSH PRIVILEGES;
 
 /*PROCEDIMIENTOS*/
 
-DROP FUNCTION IF EXISTS login;
+DROP PROCEDURE IF EXISTS checkUser;
 DELIMITER $$
-CREATE FUNCTION login(nick VARCHAR(50), contra VARCHAR(50)) RETURNS INT DETERMINISTIC
-BEGIN
-    DECLARE idUsuario INT;
-	SELECT Usu_id INTO idUsuario FROM Usuario WHERE Usu_nick = nick AND Usu_contra = contra limit 1;
-    RETURN idUsuario;
-END $$
-DELIMITER ;
-
-
-DROP PROCEDURE IF EXISTS login;
-DELIMITER $$
-CREATE PROCEDURE login(IN nick VARCHAR(50), IN contra VARCHAR(50))
+CREATE PROCEDURE checkUser(IN nick VARCHAR(50), IN contra VARCHAR(50))
 BEGIN
 	SELECT Usu_id FROM Usuario WHERE Usu_nick = nick AND Usu_contra = contra limit 1;
 END $$

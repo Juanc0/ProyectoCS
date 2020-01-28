@@ -20,12 +20,14 @@ public class Persistence {
         this.dbPasword = password;
     }
     public Connection openConnection(){
+        System.out.println("Opening connection");
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(this.url, this.dbUsername, this.dbPasword);
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(Persistence.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("Connection opened");
         return conn;
     }
     public Connection openConnection(String username, String password){
@@ -36,10 +38,12 @@ public class Persistence {
         return this.conn;
     }
     public void closeConnection(){
+        System.out.println("Closing Connection");
         try {
             this.conn.close();
         } catch (SQLException ex) {
             Logger.getLogger(Persistence.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("Connection closed");
     }
 }
