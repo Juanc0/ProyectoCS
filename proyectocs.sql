@@ -1,5 +1,7 @@
+drop schema if exists proyectocs;
+create schema proyectocs;
 USE proyectocs;
-
+DROP TABLE If EXISTS Usuario;
 DROP TABLE If EXISTS item;
 DROP TABLE If EXISTS item_cliente;
 DROP TABLE If EXISTS cliente;
@@ -25,6 +27,19 @@ DROP TABLE If EXISTS vidrio;
 DROP TABLE If EXISTS analogo;
 DROP TABLE If EXISTS digital;
 -- Creando tablas 
+CREATE TABLE usuario
+(
+  Usu_id INT NOT NULL AUTO_INCREMENT,
+  Usu_nick VARCHAR(50) NOT NULL,
+  Usu_contra VARCHAR(50) NOT NULL,
+  Usu_rol VARCHAR(45) NOT NULL,
+  Usu_estado VARCHAR(45) NOT NULL,
+  Usu_Cli_nit VARCHAR(50) NULL REFERENCES cliente (Cli_nit),
+  Usu_Ases_id INT UNSIGNED NULL REFERENCES asesor (Ases_id),
+  Usu_Lab_id INT UNSIGNED NULL REFERENCES laboratorista (Lab_id),
+  PRIMARY KEY (Usu_id)
+);
+
 CREATE TABLE item  
 (
 Itm_id		VARCHAR(50)	NOT NULL,
@@ -316,6 +331,11 @@ PRIMARY KEY(Td_Tem_Cert_num,Td_Tem_Cert_let,Td_Tem_prog)
 
 -- INSERTAR DATOS 
 
+/*INSERT INTO usuario VALUES(Usu_nick, Usu_contra, Usu_rol, Usu_estado, Usu_Cli_nit, Usu_Ases_id, Usu_Lab_id)*/
+INSERT INTO usuario(Usu_nick, Usu_contra, Usu_rol, Usu_estado)
+VALUES('juan','pablo','jefe','pendiente');
+
+
 INSERT INTO item VALUES('1D1310572', 'BAnnO TERMOSTATICO', 'POLYSCIENCE', '9502A11C','-30 °C < T < 200 °C', 'TEMPERATURA', '200 °C','-30 °C','0.1');
 INSERT INTO item VALUES('104-IR', 	'TERMOMETRO DIGITAL-IR', 	'TESTO',	'104-IR',	'-50 °C < T < 250 °C', 	'TEMPERATURA', '250 °C','-50 °C',	'0.1');
 INSERT INTO item VALUES('2519', 	'TERMOMETRO DE VIDRIO', 	'PG ERTCB', 	'ASTM 8F',	'30 °F < T < 760 °F', 	'TEMPERATURA', '760 °F','30 °F',	'2');
@@ -603,6 +623,7 @@ INSERT INTO resumen_estadistico VALUES ('005','CTD','-10',NULL,NULL,NULL,NULL,NU
 
 -- CREACIÓN USUARIOS
 -- Creación de usuarios 
+DROP USER if exists 'auth'@'localhost';
 DROP USER if exists 'AlejandraL'@'localhost';
 DROP USER if exists 'ClaudiaM'@'localhost';
 DROP USER if exists 'CreacioneSuministros'@'localhost';
@@ -613,6 +634,7 @@ DROP USER if exists 'Calibrationservice'@'localhost';
 DROP USER if exists '4Karnes'@'localhost';
 
 
+CREATE USER 'auth'@'localhost' IDENTIFIED BY 'authPassword';
 CREATE USER 'AlejandraL'@'localhost' IDENTIFIED BY 'dcomercial111';
 CREATE USER 'ClaudiaM'@'localhost' IDENTIFIED BY 'lab112';
 CREATE USER 'Agrosavia'@'localhost' IDENTIFIED BY 'cli211';
@@ -623,6 +645,9 @@ CREATE USER 'Calibrationservice'@'localhost' IDENTIFIED BY 'cli213';
 CREATE USER '4Karnes'@'localhost' IDENTIFIED BY 'cli214';
 
 -- Asignación de permisos a los usuarios
+/*GRANT SELECT ON proyectocs.usuario TO 'auth'@'localhost';*/
+GRANT EXECUTE ON PROCEDURE login TO 'auth'@'localhost';
+
 GRANT ALL PRIVILEGES ON proyectocs.cliente TO 'gerente'@'localhost';
 GRANT ALL PRIVILEGES ON proyectocs.asesor TO 'gerente'@'localhost';
 GRANT ALL PRIVILEGES ON proyectocs.laboratorista TO 'gerente'@'localhost';
@@ -679,7 +704,43 @@ GRANT UPDATE ON proyectocs.digital TO 'JhonFredyM'@'localhost';
 
 FLUSH PRIVILEGES;
 
-/*PROCEDIMIENTOS*/ 
+/*PROCEDIMIENTOS*/
+
+DROP FUNCTION IF EXISTS login;
+DELIMITER $$
+CREATE FUNCTION login(nick VARCHAR(50), contra VARCHAR(50)) RETURNS INT DETERMINISTIC
+BEGIN
+    DECLARE idUsuario INT;
+	SELECT Usu_id INTO idUsuario FROM Usuario WHERE Usu_nick = nick AND Usu_contra = contra limit 1;
+    RETURN idUsuario;
+END $$
+DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS login;
+DELIMITER $$
+CREATE PROCEDURE login(IN nick VARCHAR(50), IN contra VARCHAR(50))
+BEGIN
+	SELECT Usu_id FROM Usuario WHERE Usu_nick = nick AND Usu_contra = contra limit 1;
+END $$
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS getUser;
+DELIMITER $$
+CREATE PROCEDURE getUser(IN idUsuario INT)
+BEGIN
+	SELECT
+	Usu_id,
+	Usu_nick,
+	Usu_rol,
+	Usu_estado,
+	Usu_Cli_nit,
+	Usu_Ases_id,
+	Usu_Lab_id
+	FROM Usuario WHERE Usu_id = idUsuario LIMIT 1;
+END $$
+DELIMITER ;
+
 DROP VIEW IF EXISTS vt2;
 DROP VIEW IF EXISTS vt3;
 DROP VIEW IF EXISTS vt4;
