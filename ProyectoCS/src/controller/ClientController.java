@@ -25,7 +25,7 @@ public class ClientController implements ActionListener {
     }
     
     private void personalizeView(){
-        this.clientView.tlUsername.setText(this.currUser.getUsername());
+        this.clientView.tlUsername.setText(this.currUser.getCcnit());
     }
 
     @Override

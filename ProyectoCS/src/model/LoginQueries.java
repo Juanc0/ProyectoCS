@@ -8,11 +8,11 @@ import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 public class LoginQueries{
-    public int checkUser(Connection conn, String nick, String password){
+    public int checkUser(Connection conn, String ccnit, String password){
         try {
             String query = "{ call checkUser(?, ?) }";
             CallableStatement cs = conn.prepareCall(query);
-            cs.setString(1, nick);
+            cs.setString(1, ccnit);
             cs.setString(2, password);
             ResultSet rs = cs.executeQuery();
             if(rs.next())
@@ -33,12 +33,14 @@ public class LoginQueries{
             if(rs.next()){
                 currUser = new UserModel(
                     rs.getInt("Usu_id"),
-                    rs.getString("Usu_nick"),
-                    rs.getString("Usu_rol"),
-                    rs.getString("Usu_estado"),
+                    rs.getString("Usu_ccnit"),
+                    rs.getString("Usu_nombre"),
                     rs.getString("Usu_Cli_nit"),
                     rs.getInt("Usu_Ases_id"),
-                    rs.getInt("Usu_Lab_id")
+                    rs.getInt("Usu_Lab_id"),
+                    rs.getBoolean("Usu_esMetrologo"),
+                    rs.getBoolean("Usu_esGerente"),
+                    rs.getBoolean("Usu_esSu")
                 );
             }
         } catch (SQLException ex) {

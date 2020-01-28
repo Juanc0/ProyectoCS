@@ -22,26 +22,33 @@ public class LoginController implements ActionListener {
         this.loginView.setVisible(true);
     }
     
+    public boolean loginAction(String ccnit, String password){
+        this.persistence.openConnection();
+        int userId = this.loginQueries.checkUser(
+                this.persistence.getConnection(),
+                String.valueOf(this.loginView.txtCCNIT.getText()),
+                String.valueOf(this.loginView.txtPassword.getText()));
+        if(userId == 0){
+            System.out.println("wrong ccnit or password");
+            return false;
+        }
+        UserModel currUser = this.loginQueries.getUser(this.persistence.getConnection(), userId);
+        System.out.println("success loegin");
+        this.persistence.closeConnection();
+        
+        this.loginView.dispose();
+        new ClientController(currUser);
+        return true;
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == this.loginView.btnLogin){
-            this.persistence.openConnection();
-            int userId = this.loginQueries.checkUser(
-                    this.persistence.getConnection(),
-                    String.valueOf(this.loginView.txtUsername.getText()),
-                    String.valueOf(this.loginView.txtPassword.getText()));
-            if(userId == 0){
-                System.out.println("wrong sername or password");
-            } else {
-                UserModel currUser = this.loginQueries.getUser(this.persistence.getConnection(), userId);
-                System.out.println("success loegin");
-                this.loginView.dispose();
-                new ClientController(currUser);
-            }
-            this.persistence.closeConnection();
+            loginAction(String.valueOf(this.loginView.txtCCNIT.getText()),
+                        String.valueOf(this.loginView.txtPassword.getText()));
         } else if(e.getSource() == this.loginView.btnSignup){
             this.loginView.dispose();
-            new SignupController();
+            new ClientSignupController();
         }
     }
 }

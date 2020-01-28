@@ -38,9 +38,6 @@ CREATE USER '4Karnes'@'localhost' IDENTIFIED BY 'cli214';*/
 
 -- Asignación de permisos a los usuarios
 
-/*auth - login*/
-GRANT EXECUTE ON PROCEDURE checkUser TO 'auth'@'localhost';
-GRANT EXECUTE ON PROCEDURE getUser TO 'auth'@'localhost';
 
 /*GRANT ALL PRIVILEGES ON proyectocs.cliente TO 'gerente'@'localhost';
 GRANT ALL PRIVILEGES ON proyectocs.asesor TO 'gerente'@'localhost';

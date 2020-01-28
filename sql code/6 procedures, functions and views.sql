@@ -3,12 +3,13 @@
 /*LOGIN*/
 DROP PROCEDURE IF EXISTS checkUser;
 DELIMITER $$
-CREATE PROCEDURE checkUser(IN nick VARCHAR(50), IN contra VARCHAR(50))
+CREATE PROCEDURE checkUser(IN ccnit VARCHAR(50), IN contra VARCHAR(50))
 BEGIN
-	SELECT Usu_id FROM Usuario WHERE Usu_nick = nick AND Usu_contra = contra limit 1;
+	SELECT Usu_id FROM Usuario WHERE Usu_ccnit = ccnit AND Usu_contra = contra limit 1;
 END $$
 DELIMITER ;
 
+/*LOGIN*/
 DROP PROCEDURE IF EXISTS getUser;
 DELIMITER $$
 CREATE PROCEDURE getUser(IN idUsuario INT)
@@ -28,7 +29,48 @@ BEGIN
 END $$
 DELIMITER ;
 
-/*REGISTER*/
+/*SIGNUP*/
+DROP PROCEDURE IF EXISTS createClientUser;
+DELIMITER $$
+CREATE PROCEDURE createUser(
+	IN ccnit VARCHAR(50),
+    IN nick VARCHAR(50),
+    IN contra VARCHAR(50),
+    IN clientNit VARCHAR(50))
+BEGIN
+	INSERT INTO	usuario(	Usu_ccnit,	Usu_nombre,	Usu_contra,	Usu_Cli_nit	)
+				VALUES(		ccnit,		nick,		contra,		clientNit	);
+END $$
+DELIMITER ;
+
+/*SIGNUP*/
+DROP PROCEDURE IF EXISTS createClient;
+DELIMITER $$
+CREATE PROCEDURE createClient(
+	IN nit		VARCHAR(45),
+	IN emp		VARCHAR(100),
+	IN carg		VARCHAR(50),
+	IN tel		VARCHAR(50),
+	IN fax		VARCHAR(50),
+	IN email	VARCHAR(100),
+	IN ciu		VARCHAR(25),
+	IN dir		VARCHAR(100),
+	IN idart	VARCHAR(45))
+BEGIN
+	INSERT INTO cliente(
+			Cli_nit,
+			Cli_emp,
+			Cli_cont_carg,
+			Cli_tel,
+			Cli_fax,
+			Cli_email,
+			Cli_ciu,
+			Cli_dir,
+			Cli_idart
+    ) VALUES(nit, emp, carg, tel, fax, email, ciu, dir, idart);
+END $$
+DELIMITER ;
+
 
 DROP VIEW IF EXISTS vt2;
 DROP VIEW IF EXISTS vt3;
@@ -44,14 +86,6 @@ CREATE VIEW vt2 AS SELECT Cli_emp,Cli_mail,Cli_tel,Ordc_preciotol,Ordc_fec FROM 
 CREATE VIEW vt3 AS SELECT Cli_emp,Cli_mail,Cli_tel,AVG(Ordc_preciotol) AS prom,SUM(Ordc_preciotol) AS total, COUNT(Cli_emp) AS serv FROM vt2 GROUP BY Cli_emp,Cli_mail,Cli_tel; 
 
 /* Procedimiento de descuentos: Otorga un bono de descuento por cierto valor pagado en total de servicios */
-DROP TABLE IF EXISTS bono;
-CREATE TABLE bono
-(
-	bon_Cli_emp VARCHAR(40) NOT NULL,
-	bon_desc INT NOT NULL,
-	PRIMARY KEY(bon_Cli_emp)
-) ENGINE=InnoDB;
-
 DELIMITER $$
 DROP PROCEDURE IF EXISTS dest;
 CREATE PROCEDURE dest(empresa VARCHAR(50))

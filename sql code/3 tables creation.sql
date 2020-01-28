@@ -68,9 +68,9 @@ CREATE TABLE cliente
 	Cli_nit		VARCHAR(45)	NOT NULL,
 	Cli_emp		VARCHAR(100)	NOT NULL,
 	Cli_cont_carg	VARCHAR(50)	NULL,
-	Cli_tel		INT		NOT NULL,
-	Cli_fax		INT		NULL,
-	Cli_mail	VARCHAR(100)	NULL,
+	Cli_tel		VARCHAR(50)	NOT NULL,
+	Cli_fax		VARCHAR(50)	NULL,
+	Cli_email	VARCHAR(100)	NULL,
 	Cli_ciu		VARCHAR(25)	NOT NULL,
 	Cli_dir		VARCHAR(100)	NOT NULL,
 	Cli_idart	VARCHAR(45)	NOT NULL,
@@ -97,6 +97,14 @@ CREATE TABLE orden_compra
     Ordc_Ases_id INT NULL REFERENCES usuario(Usu_id),
     Ordc_Cli_id INT NOT NULL REFERENCES usuario(Usu_id),
 	PRIMARY KEY(Ordc_id)
+) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS bono;
+CREATE TABLE bono
+(
+	bon_Cli_emp VARCHAR(40) NOT NULL,
+	bon_desc INT NOT NULL,
+	PRIMARY KEY(bon_Cli_emp)
 ) ENGINE=InnoDB;
 
 CREATE TABLE orden_compra_espec

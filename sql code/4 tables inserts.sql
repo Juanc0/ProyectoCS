@@ -34,8 +34,9 @@ INSERT INTO usuario VALUES(default, '1030586792', 'Fabian Avila', 'contra', '103
 -- usuarios asesor
 INSERT INTO usuario VALUES(default, 'cedula1', 'Alejandra Lozano', 'contra', null, '111', null, false, false, false);
 -- usuarios laboratorista
-INSERT INTO usuario VALUES(default, 'cedula1', 'Jhon Fredy Montoya', 'contra', null, null, '242', false, false, false);
-INSERT INTO usuario VALUES(default, 'cedula1', 'Claudia Montoya', 'contra', null, null, '233', false, false, false);
+INSERT INTO usuario VALUES(default, 'cedula2', 'Jhon Fredy Montoya', 'contra', null, null, '242', false, false, false);
+INSERT INTO usuario VALUES(default, 'cedula3', 'Claudia Montoya', 'contra', null, null, '233', false, false, false);
+INSERT INTO usuario VALUES(default, 'cedu', 'Juan Pablo Ovalle Sánchez', 'xlr8', null, null, null, false, false, false);
 
 INSERT INTO orden_compra VALUES(default,'50°C, 75°C, 100°C, 150°C, 200°C', 'Caracterización','5', '725000','2019-06-18', '', 'EURAMENT-13','finalizado','5','2');
 INSERT INTO orden_compra VALUES(default,'90 °C, 150 °C, 200 °C', 'Calibración','1', '300000','2019-09-11', '', 'Guía Técnica de Trazabilidad Metrológica e Incertidumbre de Medida en Caracterización Termica de Bannos y Hornos de Temperatura Controlada','finalizado','5','1');
