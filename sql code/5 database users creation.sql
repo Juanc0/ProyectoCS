@@ -9,14 +9,14 @@ DROP USER if exists 'metrologo'@'localhost';
 DROP USER if exists 'gerente'@'localhost';
 DROP USER if exists 'su'@'localhost';
 
-/*DROP USER if exists 'AlejandraL'@'localhost';
+DROP USER if exists 'AlejandraL'@'localhost';
 DROP USER if exists 'ClaudiaM'@'localhost';
 DROP USER if exists 'CreacioneSuministros'@'localhost';
 DROP USER if exists 'Agrosavia'@'localhost';
 DROP USER if exists 'JhonFredyM'@'localhost';
 DROP USER if exists 'gerente'@'localhost';
 DROP USER if exists 'Calibrationservice'@'localhost';
-DROP USER if exists '4Karnes'@'localhost';*/
+DROP USER if exists '4Karnes'@'localhost';
 
 CREATE USER 'auth'@'localhost' IDENTIFIED BY 'authPassword';
 CREATE USER 'cliente'@'localhost' IDENTIFIED BY 'clientePassword';

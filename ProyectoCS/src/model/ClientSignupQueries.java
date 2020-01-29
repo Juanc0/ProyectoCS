@@ -34,7 +34,6 @@ public class ClientSignupQueries{
             cs.setString(6, newClient.getEmail());
             cs.setString(7, newClient.getCity());
             cs.setString(8, newClient.getAddress());
-            cs.setString(9, newClient.getIdArt());
             cs.execute();
         } catch (SQLException ex) {
             Logger.getLogger(ClientSignupQueries.class.getName()).log(Level.SEVERE, null, ex);
