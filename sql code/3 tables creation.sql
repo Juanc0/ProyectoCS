@@ -1,7 +1,6 @@
 USE proyectocs;
-DROP TABLE If EXISTS Usuario;
+DROP TABLE If EXISTS usuario;
 DROP TABLE If EXISTS item;
-DROP TABLE If EXISTS item_cliente;
 DROP TABLE If EXISTS cliente;
 DROP TABLE IF EXISTS deletedClient; -- xxx
 DROP TABLE If EXISTS orden_compra;
@@ -31,7 +30,7 @@ CREATE TABLE usuario
   Usu_ccnit VARCHAR(50) NOT NULL,
   Usu_nombre VARCHAR(50) NULL,
   Usu_contra VARCHAR(50) NOT NULL,
-  Usu_Cli_nit VARCHAR(50) NULL DEFAULT NULL REFERENCES cliente (Cli_nit),
+  Usu_Cli_id INT NULL DEFAULT NULL REFERENCES cliente (Cli_id),
   Usu_Ases_id INT NULL DEFAULT NULL,
   Usu_Lab_id INT NULL DEFAULT NULL,
   Usu_esMetrologo BOOLEAN NOT NULL DEFAULT FALSE,
@@ -42,30 +41,25 @@ CREATE TABLE usuario
 
 CREATE TABLE item  
 (
-	Itm_id		VARCHAR(50)	NOT NULL,
+	Itm_id		INT	NOT NULL AUTO_INCREMENT,
+    Itm_Cli_id	INT NOT NULL,
+    Itm_auxId		VARCHAR(50)	NOT NULL,
 	Itm_nom		VARCHAR(100)	NOT NULL,
 	Itm_mar		VARCHAR(50)	NOT NULL,
 	Itm_mod		VARCHAR(50)	NOT NULL,
-	Itm_ran		VARCHAR(50)	NOT NULL,
+	Itm_ran		VARCHAR(50)	NOT NULL,-- duplicado si se trae de itemCliente
 	Itm_magn	VARCHAR(50)	NOT NULL,
 	Itm_almax	VARCHAR(50)	NOT NULL,
 	Itm_almin	VARCHAR(50)	NOT NULL,
 	Itm_res 	DOUBLE 		NOT NULL,
+	Itm_uso	VARCHAR(50)	NOT NULL,
 	PRIMARY KEY(Itm_id)
 ) ENGINE=InnoDB;
 
-CREATE TABLE item_cliente
-(
-	ItmC_id 	VARCHAR(50)	NOT NULL,
-	ItmC_Cli_nit VARCHAR(50)	NOT NULL REFERENCES cliente(Cli_nit),
-	ItmC_Itm_id	VARCHAR(50)	NOT NULL REFERENCES item(Itm_id),
-	ItmC_uso	VARCHAR(50)	NOT NULL,
-	ItmC_ran	VARCHAR(50)	NOT NULL,
-	PRIMARY KEY(ItmC_id)
-) ENGINE=InnoDB;
 
 CREATE TABLE cliente
 (
+	Cli_id		INT NOT NULL AUTO_INCREMENT,
 	Cli_nit		VARCHAR(45)	NOT NULL,
 	Cli_emp		VARCHAR(100)	NOT NULL,
 	Cli_cont_carg	VARCHAR(50)	NULL,
@@ -75,7 +69,7 @@ CREATE TABLE cliente
 	Cli_ciu		VARCHAR(25)	NOT NULL,
 	Cli_dir		VARCHAR(100)	NOT NULL,
 	Cli_idart	VARCHAR(45) NULL,
-	PRIMARY KEY(Cli_nit)
+	PRIMARY KEY(Cli_id)
 ) ENGINE=InnoDB;
 
 CREATE TABLE deletedClient
@@ -119,6 +113,19 @@ CREATE TABLE orden_compra_espec
 	PRIMARY KEY(OrdEs_idmov)
 ) ENGINE=InnoDB;
 
+CREATE TABLE certificado
+(
+	Cert_num		INT	 	NOT NULL AUTO_INCREMENT,
+	Cert_let		VARCHAR(10)	NOT NULL,
+	Cert_OrdEs_idmov 	INT		NOT NULL REFERENCES orden_compra_espec(OrdEs_idmov),
+	Cert_temax		DOUBLE		NOT NULL, 
+	Cert_temin		DOUBLE		NOT NULL,
+	Cert_humax		DOUBLE		NOT NULL,
+	Cert_humin		DOUBLE		NOT NULL,
+	Cert_Lab_id 	INT NOT NULL REFERENCES usuario(Usu_id),
+	PRIMARY KEY(Cert_num,Cert_let)
+) ENGINE=InnoDB;
+
 CREATE TABLE trazabilidad
 (
 	Traz_Cert_num 	DOUBLE 		NOT NULL REFERENCES certificado(Cert_num),
@@ -160,18 +167,6 @@ CREATE TABLE resumen_estadistico(
 	PRIMARY KEY (Est_Cert_num,Est_Cert_let,Est_prog)
 )ENGINE=InnoDB;
 
-CREATE TABLE certificado
-(
-	Cert_num		INT	 	NOT NULL AUTO_INCREMENT,
-	Cert_let		VARCHAR(10)	NOT NULL,
-	Cert_OrdEs_idmov 	INT		NOT NULL REFERENCES orden_compra_espec(OrdEs_idmov),
-	Cert_temax		DOUBLE		NOT NULL, 
-	Cert_temin		DOUBLE		NOT NULL,
-	Cert_humax		DOUBLE		NOT NULL,
-	Cert_humin		DOUBLE		NOT NULL,
-	Cert_Lab_id 	INT NOT NULL REFERENCES usuario(Usu_id),
-	PRIMARY KEY(Cert_num,Cert_let)
-) ENGINE=InnoDB;
 
 CREATE TABLE valMax(
 	fecha DATE,

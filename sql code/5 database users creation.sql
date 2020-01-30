@@ -2,6 +2,9 @@
 -- CREACIÓN USUARIOS
 -- Creación de usuarios 
 DROP USER if exists 'auth'@'localhost';
+DROP USER if exists 'main'@'localhost';
+DROP USER if exists 'profile'@'localhost';
+
 DROP USER if exists 'cliente'@'localhost';
 DROP USER if exists 'asesor'@'localhost';
 DROP USER if exists 'laboratorista'@'localhost';
@@ -19,6 +22,9 @@ DROP USER if exists 'Calibrationservice'@'localhost';
 DROP USER if exists '4Karnes'@'localhost';
 
 CREATE USER 'auth'@'localhost' IDENTIFIED BY 'authPassword';
+CREATE USER 'main'@'localhost' IDENTIFIED BY 'mainPassword';
+CREATE USER 'profile'@'localhost' IDENTIFIED BY 'profilePassword';
+
 CREATE USER 'cliente'@'localhost' IDENTIFIED BY 'clientePassword';
 CREATE USER 'asesor'@'localhost' IDENTIFIED BY 'asesorPassword';
 CREATE USER 'laboratorista'@'localhost' IDENTIFIED BY 'laboratoristaPassword';
@@ -91,6 +97,6 @@ GRANT UPDATE ON proyectocs.zonaBa TO 'JhonFredyM'@'localhost';
 GRANT UPDATE ON proyectocs.bloque TO 'JhonFredyM'@'localhost';
 GRANT UPDATE ON proyectocs.vidrio TO 'JhonFredyM'@'localhost';
 GRANT UPDATE ON proyectocs.analogo TO 'JhonFredyM'@'localhost';
-GRANT UPDATE ON proyectocs.digital TO 'JhonFredyM'@'localhost';*/
+GRANT UPDATE ON proyectocs.digital TO 'JhonFredyM'@'localhost';
 
-FLUSH PRIVILEGES;
+FLUSH PRIVILEGES;*/

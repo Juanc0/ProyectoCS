@@ -2,14 +2,17 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 import model.Persistence;
 import model.UserModel;
 import model.LoginQueries;
+import model.UserQueries;
 import view.LoginView;
 
 public class LoginController implements ActionListener {
     private Persistence persistence = new Persistence();
     private LoginQueries loginQueries = new LoginQueries();
+    private UserQueries userQueries = new UserQueries();
     private LoginView loginView = new LoginView();
 
     public LoginController() {
@@ -26,15 +29,15 @@ public class LoginController implements ActionListener {
         this.persistence.openConnection();
         int userId = this.loginQueries.checkUser(this.persistence.getConnection(), ccnit, password);
         if(userId == 0){
-            System.out.println("wrong ccnit or password");
+            JOptionPane.showMessageDialog(this.loginView, "wrong ccnit or password");
             return false;
         }
-        UserModel currUser = this.loginQueries.getUser(this.persistence.getConnection(), userId);
+        UserModel currUser = this.userQueries.getUser(this.persistence.getConnection(), userId);
         System.out.println("success loegin");
         this.persistence.closeConnection();
         
         this.loginView.dispose();
-        new ClientController(currUser);
+        new MainController(currUser);
         return true;
     }
     

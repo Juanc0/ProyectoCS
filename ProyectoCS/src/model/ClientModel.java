@@ -1,6 +1,7 @@
 package model;
 
 public class ClientModel {
+    private int id = 0;
     private String nit;
     private String company;
     private String job;
@@ -9,9 +10,9 @@ public class ClientModel {
     private String email;
     private String city;
     private String address;
-    private String idArt = null;
+    private String artificialId = null;
 
-    // for show his information
+    // for create one
     public ClientModel(String nit, String company, String job, String phone, String fax, String email, String city, String address) {
         this.nit = nit;
         this.company = company;
@@ -21,8 +22,27 @@ public class ClientModel {
         this.email = email;
         this.city = city;
         this.address = address;
-    }    
-    
+    }
+    // for show his information
+    public ClientModel(int id, String nit, String company, String job, String phone, String fax, String email, String city, String address, String artificialId) {
+        this.id = id;
+        this.nit = nit;
+        this.company = company;
+        this.job = job;
+        this.phone = phone;
+        this.fax = fax;
+        this.email = email;
+        this.city = city;
+        this.address = address;
+        this.artificialId = artificialId;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getNit() {
         return this.nit;
     }
@@ -71,10 +91,10 @@ public class ClientModel {
     public void setAddress(String address) {
         this.address = address;
     }
-    public String getIdArt() {
-        return this.idArt;
+    public String getArtificialId() {
+        return this.artificialId;
     }
-    public void setIdArt(String idArt) {
-        this.idArt = idArt;
+    public void setArtificialId(String artificialId) {
+        this.artificialId = artificialId;
     }
 }

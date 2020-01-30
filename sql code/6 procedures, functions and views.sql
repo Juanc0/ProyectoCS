@@ -1,6 +1,6 @@
 /*PROCEDIMIENTOS*/
 
-/*LOGIN*/
+/*auth*/
 DROP PROCEDURE IF EXISTS checkUser;
 DELIMITER $$
 CREATE PROCEDURE checkUser(IN ccnit VARCHAR(50), IN contra VARCHAR(50))
@@ -9,7 +9,34 @@ BEGIN
 END $$
 DELIMITER ;
 
-/*LOGIN*/
+/*user*/
+DROP PROCEDURE IF EXISTS createSimpleUser;
+DELIMITER $$
+CREATE PROCEDURE createSimpleUser(
+	IN ccnit VARCHAR(50),
+    IN nick VARCHAR(50),
+    IN contra VARCHAR(50))
+BEGIN
+	INSERT INTO	usuario(	Usu_ccnit,	Usu_nombre,	Usu_contra	)
+				VALUES(		ccnit,		nick,		contra		);
+END $$
+DELIMITER ;
+
+/*user*/
+DROP PROCEDURE IF EXISTS createClientUser;
+DELIMITER $$
+CREATE PROCEDURE createClientUser(
+	IN ccnit VARCHAR(50),
+    IN nick VARCHAR(50),
+    IN contra VARCHAR(50),
+    IN clientId INT)
+BEGIN
+	INSERT INTO	usuario(	Usu_ccnit,	Usu_nombre,	Usu_contra,	Usu_Cli_id	)
+				VALUES(		ccnit,		nick,		contra,		clientId	);
+END $$
+DELIMITER ;
+
+/*user*/
 DROP PROCEDURE IF EXISTS getUser;
 DELIMITER $$
 CREATE PROCEDURE getUser(IN idUsuario INT)
@@ -18,32 +45,50 @@ BEGIN
 		Usu_id,
 		Usu_ccnit,
 		Usu_nombre,
-		/*Usu_contra,*/
-		Usu_Cli_nit,
+		Usu_contra,
+		Usu_Cli_id,
 		Usu_Ases_id,
 		Usu_Lab_id,
 		Usu_esMetrologo,
 		Usu_esGerente,
 		Usu_esSu
-	FROM Usuario WHERE Usu_id = idUsuario LIMIT 1;
+	FROM usuario WHERE Usu_id = idUsuario LIMIT 1;
 END $$
 DELIMITER ;
 
-/*SIGNUP*/
-DROP PROCEDURE IF EXISTS createClientUser;
+/*user*/
+DROP PROCEDURE IF EXISTS updateUser;
 DELIMITER $$
-CREATE PROCEDURE createClientUser(
+CREATE PROCEDURE updateUser(
+	IN id INT,
 	IN ccnit VARCHAR(50),
-    IN nick VARCHAR(50),
-    IN contra VARCHAR(50),
-    IN clientNit VARCHAR(50))
+	IN nombre VARCHAR(50),
+	IN contra VARCHAR(50),
+	IN Cli_id INT,
+	IN Ases_id INT,
+	IN Lab_id INT,
+	IN esMetrologo BOOLEAN,
+	IN esGerente BOOLEAN,
+	IN esSu BOOLEAN)
 BEGIN
-	INSERT INTO	usuario(	Usu_ccnit,	Usu_nombre,	Usu_contra,	Usu_Cli_nit	)
-				VALUES(		ccnit,		nick,		contra,		clientNit	);
+	UPDATE usuario
+    SET
+		Usu_ccnit = ccnit,
+		Usu_nombre = nombre,
+		Usu_contra = contra,
+		Usu_Cli_id = Cli_id,
+		Usu_Ases_id = Ases_id,
+		Usu_Lab_id = Lab_id,
+		Usu_esMetrologo = esMetrologo,
+		Usu_esGerente = esGerente,
+		Usu_esSu = esSu
+	WHERE Usu_id = id;
 END $$
 DELIMITER ;
 
-/*SIGNUP*/
+
+
+/*client*/
 DROP PROCEDURE IF EXISTS createClient;
 DELIMITER $$
 CREATE PROCEDURE createClient(
@@ -69,6 +114,119 @@ BEGIN
 END $$
 DELIMITER ;
 
+/*client*/
+DROP PROCEDURE IF EXISTS getClient;
+DELIMITER $$
+CREATE PROCEDURE getClient(IN id INT)
+BEGIN
+	SELECT
+		Cli_id,
+		Cli_nit,
+		Cli_emp,
+		Cli_cont_carg,
+		Cli_tel,
+		Cli_fax,
+		Cli_email,
+		Cli_ciu,
+		Cli_dir,
+        Cli_idart
+	FROM cliente WHERE Cli_id = id;
+END $$
+DELIMITER ;
+
+/*client*/
+DROP PROCEDURE IF EXISTS updateClient;
+DELIMITER $$
+CREATE PROCEDURE updateClient(
+	IN id 		INT,
+	IN nit		VARCHAR(45),
+	IN emp		VARCHAR(100),
+	IN carg		VARCHAR(50),
+	IN tel		VARCHAR(50),
+	IN fax		VARCHAR(50),
+	IN email	VARCHAR(100),
+	IN ciu		VARCHAR(25),
+	IN dir		VARCHAR(100),
+	IN idart	BOOLEAN)
+BEGIN
+	UPDATE cliente
+    SET
+		Cli_nit = nit,
+		Cli_emp = emp,
+		Cli_cont_carg = carg,
+		Cli_tel = tel,
+		Cli_fax = fax,
+		Cli_email = email,
+		Cli_ciu = ciu,
+		Cli_dir = dir
+	WHERE Cli_id = id;
+END $$
+DELIMITER ;
+
+/*client*/
+DROP PROCEDURE IF EXISTS getClientId;
+DELIMITER $$
+CREATE PROCEDURE getClientId(IN nit VARCHAR(50)/*, out id int*/)
+BEGIN
+	SELECT Cli_id /*INTO id*/ FROM cliente WHERE Cli_nit = nit limit 1;
+END $$
+DELIMITER ;
+
+
+
+/*SIGNUP*/
+/*DROP PROCEDURE IF EXISTS updateUserClientId;
+DELIMITER $$
+CREATE PROCEDURE updateUserClientId(IN userId INT, IN clientId INT)
+BEGIN		
+	UPDATE usuario SET Cli_id = clientId WHERE Usu_id = userId;
+END $$
+DELIMITER ;*/
+
+/*client*/
+DROP PROCEDURE IF EXISTS getItems;
+DELIMITER $$
+CREATE PROCEDURE getItems(IN clientId VARCHAR(50))
+BEGIN
+	SELECT * FROM item join cliente on Itm_Cli_id = clientId;
+END $$
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS createItem;
+DELIMITER $$
+CREATE PROCEDURE createItem(
+	IN id		INT,
+	IN auxId		VARCHAR(100),
+	IN nom		VARCHAR(50),
+	IN mar		VARCHAR(50),
+	IN _mod		VARCHAR(50),
+	IN ran	VARCHAR(100),
+	IN magn		VARCHAR(25),
+	IN almax		VARCHAR(100),
+	IN almin		VARCHAR(100),
+	IN res		DOUBLE)
+BEGIN
+	INSERT INTO item(
+		Itm_id,
+		Itm_auxId,
+		Itm_nom,
+		Itm_mar,
+		Itm_mod,
+		Itm_ran,
+		Itm_magn,
+		Itm_almax,
+		Itm_almin,
+		Itm_res
+    ) VALUES(id, auxId, nom, mar, _mod, ran, magn, almax, almin, res);
+END $$
+DELIMITER ;
+
+
+
+
+
+
+
 /*
 ########################################################################################################################
 ########################################################################################################################
@@ -83,8 +241,19 @@ DROP VIEW IF EXISTS vt5;
 /* Vistas: vt2 similar a una factura resumen del cliente 
  vt3 promedio de dinero pagado,número de servicios realizados, cliente, teléfono */
 
-CREATE VIEW vt2 AS SELECT Cli_emp,Cli_email,Cli_tel,Ordc_preciotol,Ordc_fec FROM cliente JOIN item_cliente ON ItmC_Cli_nit=Cli_nit
-	JOIN orden_compra_espec ON OrdEs_ItemC_id=ItmC_id JOIN orden_compra ON Ordc_id=OrdEs_Ordc_id; 
+/* Vista vt2: factura resumen del cliente */
+CREATE VIEW vt2 AS
+	SELECT
+		Cli_id,
+		Cli_emp,
+		Cli_email,
+		Cli_tel,
+		Ordc_preciotol,
+		Ordc_fec
+	FROM orden_compra JOIN cliente ON Cli_id=OrdC_Cli_id;
+/*CREATE VIEW vt2 AS SELECT Cli_emp,Cli_email,Cli_tel,Ordc_preciotol,Ordc_fec FROM cliente JOIN item_cliente ON ItmC_Cli_id=Cli_id
+	JOIN orden_compra_espec ON OrdEs_ItemC_id=ItmC_id JOIN orden_compra ON Ordc_id=OrdEs_Ordc_id; */
+
 
 CREATE VIEW vt3 AS SELECT Cli_emp,Cli_email,Cli_tel,AVG(Ordc_preciotol) AS prom,SUM(Ordc_preciotol) AS total, COUNT(Cli_emp) AS serv FROM vt2 GROUP BY Cli_emp,Cli_email,Cli_tel; 
 
@@ -159,12 +328,13 @@ SELECT * FROM vt3;
 DROP VIEW IF EXISTS vt4;
 DROP VIEW IF EXISTS vt5; 
 
+/*
 CREATE VIEW vt4 AS SELECT DISTINCT Cli_nit, OrdEs_ItemC_id AS idi, OrdEs_Ordc_id AS idc, OrdEs_preciopun AS valor, OrdEs_ranc AS ran, OrdEs_calp AS punt 
 FROM cliente JOIN item_cliente ON Cli_nit=ItmC_Cli_nit RIGHT JOIN orden_compra_espec ON ItmC_id=OrdEs_ItemC_id;
 
 CREATE VIEW vt5 AS SELECT DISTINCT OrdEs_ItemC_id AS idi, OrdEs_Ordc_id AS idc,ItmC_uso, OrdEs_preciopun AS valor, OrdEs_ranc AS ran, OrdEs_calp AS punt 
 FROM item_cliente JOIN orden_compra_espec ON ItmC_id=OrdEs_ItemC_id;
-
+*/
 /* 
 SELECT * FROM vt4;
 SELECT * FROM vt5; */ 

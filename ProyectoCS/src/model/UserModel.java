@@ -5,7 +5,7 @@ public class UserModel {
     private String ccnit;
     private String name = null;
     private String passwrod = null;
-    private String clientNit = null;
+    private int clientId = 0;
     private int adviserId = 0;
     private int labId = 0;
     private boolean isMetrologist = false;
@@ -22,11 +22,12 @@ public class UserModel {
         this.passwrod = passwrod;
     }
     // for client view background info
-    public UserModel(int id, String ccnit, String name, String clientNit, int adviserId, int labId, boolean isMetrologist, boolean isManager, boolean isSu) {
+    public UserModel(int id, String ccnit, String name, String password, int clientId, int adviserId, int labId, boolean isMetrologist, boolean isManager, boolean isSu) {
         this.id = id;
         this.ccnit = ccnit;
         this.name = name;
-        this.clientNit = clientNit;
+        this.passwrod = password;
+        this.clientId = clientId;
         this.adviserId = adviserId;
         this.labId = labId;
         this.isMetrologist = isMetrologist;
@@ -66,11 +67,11 @@ public class UserModel {
     public void setPasswrod(String passwrod) {
         this.passwrod = passwrod;
     }
-    public String getClientNit() {
-        return this.clientNit;
+    public int getClientId() {
+        return this.clientId;
     }
-    public void setClientNit(String clientNit) {
-        this.clientNit = clientNit;
+    public void setClientId(int clientId) {
+        this.clientId = clientId;
     }
     public int getAdviserId() {
         return this.adviserId;
@@ -84,19 +85,19 @@ public class UserModel {
     public void setLabId(int labId) {
         this.labId = labId;
     }
-    public boolean isIsMetrologist() {
+    public boolean getIsMetrologist() {
         return this.isMetrologist;
     }
     public void setIsMetrologist(boolean isMetrologist) {
         this.isMetrologist = isMetrologist;
     }
-    public boolean isIsManager() {
+    public boolean getIsManager() {
         return this.isManager;
     }
     public void setIsManager(boolean isManager) {
         this.isManager = isManager;
     }
-    public boolean isIsSu() {
+    public boolean getIsSu() {
         return this.isSu;
     }
     public void setIsSu(boolean isSu) {
