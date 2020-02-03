@@ -1,11 +1,16 @@
 call getUser(1);
 select login('juan','pamblo');
 
-CALL login('juan','padblo');
+CALL login('juan','pablo');
 select "hola";
+select * from item_cliente;
+select * from item;
 select * from usuario;
+delete from usuario where Usu_id <10;
 select * from cliente;
 
+SELECT proyectocs.userExist('6');
+select proyectocs.authUser('6', '6');
 drop table if exists test;
 CREATE TABLE test
 (

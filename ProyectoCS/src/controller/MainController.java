@@ -60,6 +60,7 @@ public class MainController implements ActionListener, MouseListener{
         this.mainView.btnItemsDelete.setEnabled(false);
         this.mainView.btnItemsClientAdd.setEnabled(false);
         this.mainView.btnItemsClientDelete.setEnabled(false);
+        this.mainView.btnItemsClientRefresh.setEnabled(false);
         clearItemsListTable();
         clearItemsClientListTable();
         this.persistence.openConnection("cliente", "clientePassword");
@@ -117,13 +118,12 @@ public class MainController implements ActionListener, MouseListener{
                 new ClientProfileController(this.currUser);
             }
         }else if(e.getSource() == this.mainView.btnItemsAdd){
-            new CreateItemController(this, this.currUser.getId());
+            new CreateItemController(this, this.currUser.getClientId());
         }else if(e.getSource() == this.mainView.btnItemsDelete){
             // query to "delete"
         }else if(e.getSource() == this.mainView.btnItemsRefresh){
             refreshItemsListTable();
         }
-        
         
         else if(e.getSource() == this.mainView.btnItemsClientAdd){
             new CreateItemClientController(this, this.selectedItemId, this.currUser.getClientId());
@@ -170,3 +170,4 @@ public class MainController implements ActionListener, MouseListener{
     @Override
     public void mouseExited(MouseEvent e) {}
 }
+

@@ -11,17 +11,17 @@ import view.CreateItemClientView;
 public class CreateItemClientController implements ActionListener{
     private MainController mainController;
     private int itemId = 0;
-    private int clientUserId = 0;
+    private int clientId = 0;
     private boolean areMandatoryFieldsFull;
     private int copies;
     private Persistence persistence = new Persistence();
     private CreateItemClientView createItemClientView = new CreateItemClientView();
     private ItemClientQueries itemClientQueries = new ItemClientQueries();
     
-    public CreateItemClientController(MainController mainController, int itemId, int clientUserId) {
+    public CreateItemClientController(MainController mainController, int itemId, int clientId) {
         this.mainController = mainController;
         this.itemId = itemId;
-        this.clientUserId = clientUserId;
+        this.clientId = clientId;
         
         
         System.out.println("CreateItemClientController called");
@@ -47,7 +47,7 @@ public class CreateItemClientController implements ActionListener{
         this.areMandatoryFieldsFull = true;
         ItemClientModel newItemClient = new ItemClientModel(
             this.itemId,
-            this.clientUserId,
+            this.clientId,
             checkOptionalContent("txtSerial", this.createItemClientView.txtSerial.getText()),
             checkOptionalContent("txtInternId", this.createItemClientView.txtInternId.getText()),
             (int)this.createItemClientView.spinMaxUseRange.getValue(),

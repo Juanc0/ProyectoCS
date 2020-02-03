@@ -22,7 +22,8 @@ public class UserQueries {
             cs.setBoolean(9, newUser.getIsSu());
             cs.execute();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getStackTrace());
+            JOptionPane.showMessageDialog(null, ex.getSQLState());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         return 0;
     }
@@ -48,7 +49,8 @@ public class UserQueries {
                 );
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getStackTrace());
+            JOptionPane.showMessageDialog(null, ex.getSQLState());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         return user;
     }
@@ -68,7 +70,8 @@ public class UserQueries {
             cs.setBoolean(10, user.getIsSu());
             cs.execute();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getStackTrace());
+            JOptionPane.showMessageDialog(null, ex.getSQLState());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
 }

@@ -24,7 +24,7 @@ public class Persistence {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(this.url, this.dbUsername, this.dbPasword);
         } catch (SQLException | ClassNotFoundException ex) {
-            JOptionPane.showMessageDialog(null, ex.getStackTrace());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         System.out.println("Connection opened");
         return conn;
@@ -42,6 +42,7 @@ public class Persistence {
             this.conn.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.getStackTrace());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         System.out.println("Connection closed");
     }

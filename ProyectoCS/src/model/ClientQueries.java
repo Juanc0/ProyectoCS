@@ -24,7 +24,8 @@ public class ClientQueries{
             cs.execute();
             return cs.getInt(1);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getStackTrace());
+            JOptionPane.showMessageDialog(null, ex.getSQLState());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         return 0;
     }
@@ -51,7 +52,8 @@ public class ClientQueries{
                 );
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getStackTrace());
+            JOptionPane.showMessageDialog(null, ex.getSQLState());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         return client;
     }
@@ -71,7 +73,8 @@ public class ClientQueries{
             cs.setString(10, client.getType());
             cs.execute();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getStackTrace());
+            JOptionPane.showMessageDialog(null, ex.getSQLState());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }    
 }

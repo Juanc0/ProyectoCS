@@ -17,7 +17,8 @@ public class LoginQueries{
             cs.execute();
             return cs.getBoolean(1);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getStackTrace());
+            JOptionPane.showMessageDialog(null, ex.getSQLState());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         return false;
     }
@@ -31,7 +32,8 @@ public class LoginQueries{
             cs.execute();
             return cs.getInt(1);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getStackTrace());
+            JOptionPane.showMessageDialog(null, ex.getSQLState());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         return 0;
     }

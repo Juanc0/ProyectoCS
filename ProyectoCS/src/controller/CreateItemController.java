@@ -12,7 +12,7 @@ import view.CreateItemView;
 
 public class CreateItemController implements ActionListener{
     private MainController mainController;
-    private int currUserId;
+    private int clientId;
     private boolean areMandatoryFieldsFull;
     private int copies;
     private Persistence persistence = new Persistence();
@@ -20,9 +20,9 @@ public class CreateItemController implements ActionListener{
     private ItemQueries itemQueries = new ItemQueries();
     private ItemClientQueries itemClientQueries = new ItemClientQueries();
     
-    public CreateItemController(MainController mainController, int currUserId) {
+    public CreateItemController(MainController mainController, int clientId) {
         this.mainController = mainController;
-        this.currUserId = currUserId;
+        this.clientId = clientId;
         
         System.out.println("CreateItemController called");
         this.createItemView.btnCancel.addActionListener(this);
@@ -62,7 +62,7 @@ public class CreateItemController implements ActionListener{
             Double.parseDouble(checkContent(String.valueOf(this.createItemView.spinPrecision.getValue()))));
         ItemClientModel newItemClient = new ItemClientModel(
             0,
-            currUserId,
+            clientId,
             checkOptionalContent("txtSerial", this.createItemView.txtSerial.getText()),
             checkOptionalContent("txtInternId", this.createItemView.txtInternId.getText()),
             (int)this.createItemView.spinMaxUseRange.getValue(),
@@ -74,7 +74,9 @@ public class CreateItemController implements ActionListener{
             JOptionPane.showMessageDialog(this.createItemView, "there are mandatory fields empty");
         }else{
             this.persistence.openConnection("cliente","clientePassword");
-            newItemClient.setItemId(this.itemQueries.createItem(this.persistence.getConnection(), newItem));
+            int conchaaaaaa = this.itemQueries.createItem(this.persistence.getConnection(), newItem);
+            System.out.println(conchaaaaaa);
+            newItemClient.setItemId(conchaaaaaa);
             while(this.copies-- > 0)
                 this.itemClientQueries.createItemClient(this.persistence.getConnection(), newItemClient);
             this.persistence.closeConnection();

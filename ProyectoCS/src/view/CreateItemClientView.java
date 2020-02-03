@@ -13,8 +13,6 @@ public class CreateItemClientView extends javax.swing.JFrame {
         jFrame1 = new javax.swing.JFrame();
         jFrame2 = new javax.swing.JFrame();
         spinnerCopies1 = new javax.swing.JSpinner();
-        btnSave = new javax.swing.JButton();
-        btnCancel = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -30,6 +28,8 @@ public class CreateItemClientView extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         txtInternId = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
+        btnCancel = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -57,13 +57,12 @@ public class CreateItemClientView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnSave.setText("Guardar");
-
-        btnCancel.setText("Cancelar");
-
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Datos especificos y de uso");
+
+        jPanel4.setBackground(new java.awt.Color(230, 230, 230));
+        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel2.setText("Alcance máximo:");
 
@@ -116,6 +115,9 @@ public class CreateItemClientView extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel1.setBackground(new java.awt.Color(230, 230, 230));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
         tlNit1.setText("Serial:");
 
         jLabel14.setText("Uso:");
@@ -160,6 +162,10 @@ public class CreateItemClientView extends javax.swing.JFrame {
                     .addComponent(txtUse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        btnCancel.setText("Cancelar");
+
+        btnSave.setText("Guardar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

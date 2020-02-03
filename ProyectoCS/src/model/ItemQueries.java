@@ -23,7 +23,7 @@ public class ItemQueries {
                     rs.getString("Itm_let"),
                     rs.getString("Itm_mar"),
                     rs.getString("Itm_mod"),
-                    rs.getString("Itm_marg"),
+                    rs.getString("Itm_magn"),
                     rs.getInt("Itm_almax"),
                     rs.getInt("Itm_almin"),
                     rs.getDouble("Itm_res"),
@@ -31,7 +31,8 @@ public class ItemQueries {
                 ));
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getStackTrace());
+            JOptionPane.showMessageDialog(null, ex.getSQLState());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         return items;
     }
@@ -51,7 +52,8 @@ public class ItemQueries {
             cs.execute();
             return cs.getInt(1);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getStackTrace());
+            JOptionPane.showMessageDialog(null, ex.getSQLState());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         return 0;// should return the id
     }
@@ -72,7 +74,8 @@ public class ItemQueries {
             cs.setBoolean(10, item.getDeleted());
             cs.execute();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getStackTrace());
+            JOptionPane.showMessageDialog(null, ex.getSQLState());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }       
 }
