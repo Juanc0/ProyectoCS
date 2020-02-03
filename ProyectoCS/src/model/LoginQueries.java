@@ -1,12 +1,8 @@
 package model;
 
 import java.sql.Connection;
-import java.sql.Statement;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
-import java.sql.ResultSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import java.sql.Types;
 

@@ -8,7 +8,6 @@ import model.ClientQueries;
 import model.Persistence;
 import model.UserModel;
 import model.UserQueries;
-import view.ClientSignupView;
 import view.ClientProfileView;
 
 public class ClientProfileController implements ActionListener {

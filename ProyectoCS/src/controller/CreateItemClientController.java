@@ -3,13 +3,9 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
-import model.ClientModel;
-import model.ItemModel;
-import model.ItemQueries;
 import model.ItemClientModel;
 import model.ItemClientQueries;
 import model.Persistence;
-import model.UserModel;
 import view.CreateItemClientView;
 
 public class CreateItemClientController implements ActionListener{

@@ -1,13 +1,10 @@
 package model;
 
 import java.sql.Connection;
-import java.sql.Statement;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Types;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 public class ClientQueries{
     public int createClient(Connection conn, ClientModel newClient){

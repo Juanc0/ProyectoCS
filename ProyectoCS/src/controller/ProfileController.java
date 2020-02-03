@@ -3,13 +3,9 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
-import model.ClientModel;
-import model.ClientQueries;
 import model.Persistence;
 import model.UserModel;
 import model.UserQueries;
-import view.ClientSignupView;
-import view.ClientProfileView;
 import view.ProfileView;
 
 public class ProfileController implements ActionListener {
