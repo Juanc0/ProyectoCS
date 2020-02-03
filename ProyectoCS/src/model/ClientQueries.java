@@ -5,27 +5,31 @@ import java.sql.Statement;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.sql.Types;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 public class ClientQueries{
     public int createClient(Connection conn, ClientModel newClient){
         try {
-            String query = "{ call createClient(?, ?, ?, ?, ?, ?, ?, ?) }";
+            String query = "{ call createClient(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }";
             CallableStatement cs = conn.prepareCall(query);
-            cs.setString(1, newClient.getNit());
-            cs.setString(2, newClient.getCompany());
-            cs.setString(3, newClient.getJob());
-            cs.setString(4, newClient.getPhone());
-            cs.setString(5, newClient.getFax());
-            cs.setString(6, newClient.getEmail());
-            cs.setString(7, newClient.getCity());
-            cs.setString(8, newClient.getAddress());
+            cs.registerOutParameter(1, Types.INTEGER);
+            cs.setString(2, newClient.getNit());
+            cs.setString(3, newClient.getCompany());
+            cs.setString(4, newClient.getJob());
+            cs.setString(5, newClient.getPhone());
+            cs.setString(6, newClient.getFax());
+            cs.setString(7, newClient.getEmail());
+            cs.setString(8, newClient.getCity());
+            cs.setString(9, newClient.getAddress());
+            cs.setString(10, newClient.getType());
             cs.execute();
+            return cs.getInt(1);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+            JOptionPane.showMessageDialog(null, ex.getStackTrace());
         }
-        return 0;  //  should be the new registry id
+        return 0;
     }
     
     public ClientModel getClient(Connection conn, int clientId){
@@ -46,29 +50,15 @@ public class ClientQueries{
                     rs.getString("Cli_email"),
                     rs.getString("Cli_ciu"),
                     rs.getString("Cli_dir"),
-                    rs.getString("Cli_idart")
+                    rs.getString("Cli_estado")
                 );
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+            JOptionPane.showMessageDialog(null, ex.getStackTrace());
         }
         return client;
     }
-    public int getClientId(Connection conn, String nit){
-        try {
-            String query = "{ call getClientId(?) }";
-            CallableStatement cs = conn.prepareCall(query);
-            cs.setString(1, nit);
-            ResultSet rs = cs.executeQuery();
-            if(rs.next())
-                return rs.getInt("Cli_id");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
-        return 0;
-    }
-    
-    public int updateClient(Connection conn, ClientModel client){
+    public void updateClient(Connection conn, ClientModel client){
         try {
             String query = "{ call updateClient(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }";
             CallableStatement cs = conn.prepareCall(query);
@@ -81,24 +71,10 @@ public class ClientQueries{
             cs.setString(7, client.getEmail());
             cs.setString(8, client.getCity());
             cs.setString(9, client.getAddress());
-            cs.setString(10, client.getArtificialId());
+            cs.setString(10, client.getType());
             cs.execute();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+            JOptionPane.showMessageDialog(null, ex.getStackTrace());
         }
-        return 0;   //  should be the new registry id
-    }
-//    public int updateUserClientId(Connection conn, int userId, int clientId){
-//        try {
-//            String query = "{ call updateUserClientId(?, ?) }";
-//            CallableStatement cs = conn.prepareCall(query);
-//            cs.setInt(1, userId);
-//            cs.setInt(2, clientId);
-//            cs.execute();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(ClientQueries.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        return 0;  //  should be the new registry id
-//    }
-    
+    }    
 }

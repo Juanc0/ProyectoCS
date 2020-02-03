@@ -2,109 +2,101 @@ package model;
 
 public class ItemModel {
     private int id;
-    private String auxId;
     private String name;
+    private String type;
     private String brand;
     private String model;
-    private String scope;
     private String magnitude;
-    private String maxRange;
-    private String minRange;
-    private Double scale;
+    private int maxRange;
+    private int minRange;
+    private Double precision  ;
+    private boolean deleted;
 
-    public ItemModel(int id, String auxId, String name, String brand, String model, String range, String magnitude, String maxScope, String minScope, double scale) {
-        this.id = id;
-        this.auxId = auxId;
+        public ItemModel(String name, String brand, String model, String magnitude, int maxRange, int minRange, double precision  ) {
+        this.id = 0;
         this.name = name;
+        this.type = null;
         this.brand = brand;
         this.model = model;
-        this.range = range;
         this.magnitude = magnitude;
-        this.maxScope = maxScope;
-        this.minScope = minScope;
-        this.scale = scale;
+        this.maxRange = maxRange;
+        this.minRange = minRange;
+        this.precision = precision;
+        this.deleted = false;
+    }
+    public ItemModel(int id, String name, String type, String brand, String model, String magnitude, int maxRange, int minRange, double precision , boolean deleted) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.brand = brand;
+        this.model = model;
+        this.magnitude = magnitude;
+        this.maxRange = maxRange;
+        this.minRange = minRange;
+        this.precision = precision;
+        this.deleted = deleted;
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
-
-    public String getAuxId() {
-        return auxId;
-    }
-
-    public void setAuxId(String auxId) {
-        this.auxId = auxId;
-    }
-
     public String getName() {
-        return name;
+        return this.name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
-    public String getBrand() {
-        return brand;
+    public String getType() {
+        return this.type;
     }
-
+    public void setType(String type) {
+        this.type = type;
+    }
+    public String getBrand() {
+        return this.brand;
+    }
     public void setBrand(String brand) {
         this.brand = brand;
     }
-
     public String getModel() {
-        return model;
+        return this.model;
     }
-
     public void setModel(String model) {
         this.model = model;
     }
-
-    public String getRange() {
-        return range;
-    }
-
-    public void setRange(String range) {
-        this.range = range;
-    }
-
     public String getMagnitude() {
-        return magnitude;
+        return this.magnitude;
     }
-
     public void setMagnitude(String magnitude) {
         this.magnitude = magnitude;
     }
-
-    public String getMaxScope() {
-        return maxScope;
+    public int getMaxRange() {
+        return this.maxRange;
     }
-
-    public void setMaxScope(String maxScope) {
-        this.maxScope = maxScope;
+    public void setMaxRange(int maxRange) {
+        this.maxRange = maxRange;
     }
-
-    public String getMinScope() {
-        return minScope;
+    public int getMinRange() {
+        return this.minRange;
     }
-
-    public void setMinScope(String minScope) {
-        this.minScope = minScope;
+    public void setMinRange(int minRange) {
+        this.minRange = minRange;
     }
-
-    public Double getScale() {
-        return scale;
+    public Double getPrecision() {
+        return this.precision;
     }
-
-    public void setScale(double scale) {
-        this.scale = scale;
+    public void setPrecision(Double precision) {
+        this.precision = precision ;
     }
-    
+    public boolean getDeleted() {
+        return this.deleted;
+    }
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
     
     
 }

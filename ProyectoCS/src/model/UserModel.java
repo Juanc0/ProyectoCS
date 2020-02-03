@@ -1,48 +1,50 @@
 package model;
 
 public class UserModel {
-    private int id = 0;
+    private int id;
     private String ccnit;
-    private String name = null;
-    private String passwrod = null;
-    private int clientId = 0;
-    private int adviserId = 0;
-    private int labId = 0;
-    private boolean isMetrologist = false;
-    private boolean isManager = false;
-    private boolean isSu = false;
+    private String name;
+    private String passwrod;
+    private int clientId;
+    private boolean isAdviser;
+    private boolean isLaboratorian;
+    private boolean isMetrologist;
+    private boolean isManager;
+    private boolean isSu;
 
-    // for I have no idea
     public UserModel() {
+        this.id = 0;
+        this.ccnit = null;
+        this.name = null;
+        this.passwrod = null;
+        this.clientId = 0;
+        this.isAdviser = false;
+        this.isLaboratorian = false;
+        this.isMetrologist = false;
+        this.isManager = false;
+        this.isSu = false;
     }
-    // for login
-    public UserModel(int id, String ccnit, String passwrod) {
-        this.id = id;
+    // for create one
+    public UserModel(String ccnit, String name, String passwrod) {
+        this();
         this.ccnit = ccnit;
+        this.name = name;
         this.passwrod = passwrod;
     }
-    // for client view background info
-    public UserModel(int id, String ccnit, String name, String password, int clientId, int adviserId, int labId, boolean isMetrologist, boolean isManager, boolean isSu) {
+
+    public UserModel(int id, String ccnit, String name, String passwrod, int clientId, boolean isAdviser, boolean isLaboratorian, boolean isMetrologist, boolean isManager, boolean isSu) {
         this.id = id;
         this.ccnit = ccnit;
         this.name = name;
-        this.passwrod = password;
+        this.passwrod = passwrod;
         this.clientId = clientId;
-        this.adviserId = adviserId;
-        this.labId = labId;
+        this.isAdviser = isAdviser;
+        this.isLaboratorian = isLaboratorian;
         this.isMetrologist = isMetrologist;
         this.isManager = isManager;
         this.isSu = isSu;
     }
-    // for create one
-    public UserModel(String ccnit, String name, String passwrod) {
-        this.ccnit = ccnit;
-        this.name = name;
-        this.passwrod = passwrod;
-    }
 
-    
-    
     public int getId() {
         return this.id;
     }
@@ -73,17 +75,17 @@ public class UserModel {
     public void setClientId(int clientId) {
         this.clientId = clientId;
     }
-    public int getAdviserId() {
-        return this.adviserId;
+    public boolean getIsAdviser() {
+        return this.isAdviser;
     }
-    public void setAdviserId(int adviserId) {
-        this.adviserId = adviserId;
+    public void setIsAdviser(boolean isAdviser) {
+        this.isAdviser = isAdviser;
     }
-    public int getLabId() {
-        return this.labId;
+    public boolean getIsLaboratorian() {
+        return this.isLaboratorian;
     }
-    public void setLabId(int labId) {
-        this.labId = labId;
+    public void setIsLaboratorian(boolean isLaboratorian) {
+        this.isLaboratorian = isLaboratorian;
     }
     public boolean getIsMetrologist() {
         return this.isMetrologist;
@@ -103,5 +105,4 @@ public class UserModel {
     public void setIsSu(boolean isSu) {
         this.isSu = isSu;
     }
-   
 }

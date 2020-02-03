@@ -1,7 +1,7 @@
 package model;
 
 public class ClientModel {
-    private int id = 0;
+    private int id;
     private String nit;
     private String company;
     private String job;
@@ -10,10 +10,24 @@ public class ClientModel {
     private String email;
     private String city;
     private String address;
-    private String artificialId = null;
+    private String type;
 
     // for create one
-    public ClientModel(String nit, String company, String job, String phone, String fax, String email, String city, String address) {
+    
+    public ClientModel() {
+        this.id = 0;
+        this.nit = null;
+        this.company = null;
+        this.job = null;
+        this.phone = null;
+        this.fax = null;
+        this.email = null;
+        this.city = null;
+        this.address = null;
+        this.type = null;
+    }
+    public ClientModel(String nit, String company, String job, String phone, String fax, String email, String city, String address, String type) {
+        this();
         this.nit = nit;
         this.company = company;
         this.job = job;
@@ -22,9 +36,10 @@ public class ClientModel {
         this.email = email;
         this.city = city;
         this.address = address;
+        this.type = type;
     }
     // for show his information
-    public ClientModel(int id, String nit, String company, String job, String phone, String fax, String email, String city, String address, String artificialId) {
+    public ClientModel(int id, String nit, String company, String job, String phone, String fax, String email, String city, String address, String type) {
         this.id = id;
         this.nit = nit;
         this.company = company;
@@ -34,7 +49,7 @@ public class ClientModel {
         this.email = email;
         this.city = city;
         this.address = address;
-        this.artificialId = artificialId;
+        this.type = type;
     }
 
     public int getId() {
@@ -91,10 +106,10 @@ public class ClientModel {
     public void setAddress(String address) {
         this.address = address;
     }
-    public String getArtificialId() {
-        return this.artificialId;
+    public String getType() {
+        return this.type;
     }
-    public void setArtificialId(String artificialId) {
-        this.artificialId = artificialId;
+    public void setType(String type) {
+        this.type = type;
     }
 }

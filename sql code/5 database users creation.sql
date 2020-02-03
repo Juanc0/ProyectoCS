@@ -12,14 +12,14 @@ DROP USER if exists 'metrologo'@'localhost';
 DROP USER if exists 'gerente'@'localhost';
 DROP USER if exists 'su'@'localhost';
 
-DROP USER if exists 'AlejandraL'@'localhost';
+/*DROP USER if exists 'AlejandraL'@'localhost';
 DROP USER if exists 'ClaudiaM'@'localhost';
 DROP USER if exists 'CreacioneSuministros'@'localhost';
 DROP USER if exists 'Agrosavia'@'localhost';
 DROP USER if exists 'JhonFredyM'@'localhost';
 DROP USER if exists 'gerente'@'localhost';
 DROP USER if exists 'Calibrationservice'@'localhost';
-DROP USER if exists '4Karnes'@'localhost';
+DROP USER if exists '4Karnes'@'localhost';*/
 
 CREATE USER 'auth'@'localhost' IDENTIFIED BY 'authPassword';
 CREATE USER 'main'@'localhost' IDENTIFIED BY 'mainPassword';
@@ -44,7 +44,7 @@ CREATE USER '4Karnes'@'localhost' IDENTIFIED BY 'cli214';*/
 
 -- Asignación de permisos a los usuarios
 
-
+-- GRANT SELECT ON proyectocs.usuario TO 'auth'@'localhost';
 /*GRANT ALL PRIVILEGES ON proyectocs.cliente TO 'gerente'@'localhost';
 GRANT ALL PRIVILEGES ON proyectocs.asesor TO 'gerente'@'localhost';
 GRANT ALL PRIVILEGES ON proyectocs.laboratorista TO 'gerente'@'localhost';

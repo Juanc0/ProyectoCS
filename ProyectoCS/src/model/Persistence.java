@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 public class Persistence {
     private final String host = "localhost";
@@ -25,7 +27,7 @@ public class Persistence {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection(this.url, this.dbUsername, this.dbPasword);
         } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(Persistence.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getStackTrace());
         }
         System.out.println("Connection opened");
         return conn;
@@ -42,7 +44,7 @@ public class Persistence {
         try {
             this.conn.close();
         } catch (SQLException ex) {
-            Logger.getLogger(Persistence.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.getStackTrace());
         }
         System.out.println("Connection closed");
     }

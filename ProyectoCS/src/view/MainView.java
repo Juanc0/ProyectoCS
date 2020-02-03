@@ -33,9 +33,15 @@ public class MainView extends javax.swing.JFrame {
         items = new javax.swing.JPanel();
         btnItemsAdd = new javax.swing.JButton();
         btnItemsRefresh = new javax.swing.JButton();
-        btnItemsQuote = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tableItems = new javax.swing.JTable();
         jScrollPane1 = new javax.swing.JScrollPane();
-        itemsTable = new javax.swing.JTable();
+        tableItemsClient = new javax.swing.JTable();
+        btnItemsDelete = new javax.swing.JButton();
+        btnItemsClientAdd = new javax.swing.JButton();
+        btnItemsClientDelete = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        btnItemsClientRefresh = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
 
@@ -49,24 +55,34 @@ public class MainView extends javax.swing.JFrame {
 
         btnItemsRefresh.setText("Actualizar");
 
-        btnItemsQuote.setText("Cotizar");
+        jScrollPane2.setRowHeaderView(null);
 
-        itemsTable.setModel(new javax.swing.table.DefaultTableModel(
+        tableItems.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Id", "Id aux", "Nombre", "Marca", "Rango", "Magnitud", "Alcance max", "Alcance min", "Escala"
+                "Id", "Nombre", "Tipo", "Marca", "Modelo", "Magnitud", "Alcance máximo", "Alcance mínimo", "Resolución "
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, true, true, true, true, true, true
+                false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -77,12 +93,39 @@ public class MainView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        itemsTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        itemsTable.setMinimumSize(new java.awt.Dimension(145, 68));
-        itemsTable.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        itemsTable.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        itemsTable.setShowGrid(true);
-        jScrollPane1.setViewportView(itemsTable);
+        tableItems.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tableItems.setMinimumSize(new java.awt.Dimension(0, 0));
+        tableItems.setPreferredSize(new java.awt.Dimension(800, 128));
+        tableItems.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tableItems.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tableItems.setShowGrid(true);
+        tableItems.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(tableItems);
+
+        tableItemsClient.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tableItemsClient.setPreferredSize(new java.awt.Dimension(300, 300));
+        jScrollPane1.setViewportView(tableItemsClient);
+
+        btnItemsDelete.setText("Eliminar");
+        btnItemsDelete.setEnabled(false);
+
+        btnItemsClientAdd.setText("Agregar");
+        btnItemsClientAdd.setEnabled(false);
+
+        btnItemsClientDelete.setText("Eliminar");
+        btnItemsClientDelete.setEnabled(false);
+
+        btnItemsClientRefresh.setText("Actualizar");
 
         javax.swing.GroupLayout itemsLayout = new javax.swing.GroupLayout(items);
         items.setLayout(itemsLayout);
@@ -91,13 +134,21 @@ public class MainView extends javax.swing.JFrame {
             .addGroup(itemsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(itemsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE)
                     .addGroup(itemsLayout.createSequentialGroup()
                         .addComponent(btnItemsAdd)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnItemsQuote)
                         .addGap(18, 18, 18)
-                        .addComponent(btnItemsRefresh)))
+                        .addComponent(btnItemsDelete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnItemsRefresh))
+                    .addComponent(jScrollPane1)
+                    .addGroup(itemsLayout.createSequentialGroup()
+                        .addComponent(btnItemsClientAdd)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnItemsClientDelete)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnItemsClientRefresh))
+                    .addComponent(jSeparator1))
                 .addContainerGap())
         );
         itemsLayout.setVerticalGroup(
@@ -107,10 +158,19 @@ public class MainView extends javax.swing.JFrame {
                 .addGroup(itemsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnItemsAdd)
                     .addComponent(btnItemsRefresh)
-                    .addComponent(btnItemsQuote))
+                    .addComponent(btnItemsDelete))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(itemsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnItemsClientAdd)
+                    .addComponent(btnItemsClientDelete)
+                    .addComponent(btnItemsClientRefresh))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tabs.addTab("Items", items);
@@ -119,11 +179,11 @@ public class MainView extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 482, Short.MAX_VALUE)
+            .addGap(0, 575, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 296, Short.MAX_VALUE)
+            .addGap(0, 414, Short.MAX_VALUE)
         );
 
         tabs.addTab("tab2", jPanel2);
@@ -132,11 +192,11 @@ public class MainView extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 482, Short.MAX_VALUE)
+            .addGap(0, 575, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 296, Short.MAX_VALUE)
+            .addGap(0, 414, Short.MAX_VALUE)
         );
 
         tabs.addTab("tab3", jPanel1);
@@ -148,7 +208,7 @@ public class MainView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
+                    .addComponent(tabs)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnProfile)
@@ -209,15 +269,21 @@ public class MainView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnItemsAdd;
-    public javax.swing.JButton btnItemsQuote;
+    public javax.swing.JButton btnItemsClientAdd;
+    public javax.swing.JButton btnItemsClientDelete;
+    public javax.swing.JButton btnItemsClientRefresh;
+    public javax.swing.JButton btnItemsDelete;
     public javax.swing.JButton btnItemsRefresh;
     public javax.swing.JButton btnLogout;
     public javax.swing.JButton btnProfile;
     private javax.swing.JPanel items;
-    public javax.swing.JTable itemsTable;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
+    public javax.swing.JTable tableItems;
+    public javax.swing.JTable tableItemsClient;
     public javax.swing.JTabbedPane tabs;
     // End of variables declaration//GEN-END:variables
 }

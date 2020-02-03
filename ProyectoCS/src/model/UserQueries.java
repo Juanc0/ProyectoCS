@@ -9,20 +9,24 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class UserQueries {
-    
     public int createUser(Connection conn, UserModel newUser){
         try {
-            String query = "{ call createClientUser(?, ?, ?, ?) }";
+            String query = "{ call createUser(?, ?, ?, ?, ?, ?, ?, ?, ?) }";
             CallableStatement cs = conn.prepareCall(query);
             cs.setString(1, newUser.getCcnit());
             cs.setString(2, newUser.getName());
             cs.setString(3, newUser.getPasswrod());
             cs.setInt(4, newUser.getClientId());
+            cs.setBoolean(5, newUser.getIsAdviser());
+            cs.setBoolean(6, newUser.getIsLaboratorian());
+            cs.setBoolean(7, newUser.getIsMetrologist());
+            cs.setBoolean(8, newUser.getIsManager());
+            cs.setBoolean(9, newUser.getIsSu());
             cs.execute();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+            JOptionPane.showMessageDialog(null, ex.getStackTrace());
         }
-        return 0;   //  should be the new registry id
+        return 0;
     }
     public UserModel getUser(Connection conn, int userId){
         String query = "{call getUser(?) }";
@@ -38,19 +42,19 @@ public class UserQueries {
                     rs.getString("Usu_nombre"),
                     rs.getString("Usu_contra"),
                     rs.getInt("Usu_Cli_id"),
-                    rs.getInt("Usu_Ases_id"),
-                    rs.getInt("Usu_Lab_id"),
+                    rs.getBoolean("Usu_esAsesor"),
+                    rs.getBoolean("Usu_esLaboratorista"),
                     rs.getBoolean("Usu_esMetrologo"),
                     rs.getBoolean("Usu_esGerente"),
                     rs.getBoolean("Usu_esSu")
                 );
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+            JOptionPane.showMessageDialog(null, ex.getStackTrace());
         }
         return user;
     }
-    public int updateUser(Connection conn, UserModel user){
+    public void updateUser(Connection conn, UserModel user){
         try {
             String query = "{ call updateUser(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }";
             CallableStatement cs = conn.prepareCall(query);
@@ -59,15 +63,14 @@ public class UserQueries {
             cs.setString(3, user.getName());
             cs.setString(4, user.getPasswrod());
             cs.setInt(5, user.getClientId());
-            cs.setInt(6, user.getAdviserId());
-            cs.setInt(7, user.getLabId());
+            cs.setBoolean(6, user.getIsAdviser());
+            cs.setBoolean(7, user.getIsLaboratorian());
             cs.setBoolean(8, user.getIsMetrologist());
             cs.setBoolean(9, user.getIsManager());
             cs.setBoolean(10, user.getIsSu());
             cs.execute();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
+            JOptionPane.showMessageDialog(null, ex.getStackTrace());
         }
-        return 0;   //  should be the new registry id
     }
 }

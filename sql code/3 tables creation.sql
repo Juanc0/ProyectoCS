@@ -1,54 +1,52 @@
 USE proyectocs;
 
 DROP TABLE IF EXISTS usuario;
-CREATE TABLE usuario
-(
-  Usu_id			INT 		NOT NULL	AUTO_INCREMENT,
-  Usu_ccnit			VARCHAR(50) NOT NULL,
-  Usu_nombre		VARCHAR(50) NULL,
-  Usu_contra		VARCHAR(50) NOT NULL,
-  Usu_Cli_id		INT 		NULL DEFAULT NULL REFERENCES cliente (Cli_id),
-  Usu_esAsesor		INT 		NULL DEFAULT NULL,
-  Usu_esLaboratorista INT 		NULL DEFAULT NULL,
-  Usu_esMetrologo	BOOLEAN 	NOT NULL DEFAULT FALSE,
-  Usu_esGerente		BOOLEAN 	NOT NULL DEFAULT FALSE,
-  Usu_esSu			BOOLEAN 	NOT NULL DEFAULT FALSE,
+CREATE TABLE usuario(
+  Usu_id				INT 		NOT NULL	AUTO_INCREMENT UNIQUE,
+  Usu_ccnit				VARCHAR(50) NOT NULL UNIQUE,
+  Usu_nombre			VARCHAR(50) NULL,
+  Usu_contra			VARCHAR(50) NOT NULL,
+  Usu_Cli_id			INT 		NULL 		DEFAULT NULL REFERENCES cliente (Cli_id),
+  Usu_esAsesor			BOOLEAN 	NULL 		DEFAULT NULL,
+  Usu_esLaboratorista	BOOLEAN 	NULL 		DEFAULT NULL,
+  Usu_esMetrologo		BOOLEAN 	NOT NULL	DEFAULT FALSE,
+  Usu_esGerente			BOOLEAN 	NOT NULL	DEFAULT FALSE,
+  Usu_esSu				BOOLEAN 	NOT NULL	DEFAULT FALSE,
   PRIMARY KEY (Usu_id)
 ) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS item;
-CREATE TABLE item  
-(
+CREATE TABLE item(
 	Itm_id		INT	NOT NULL AUTO_INCREMENT,
 	Itm_nom		VARCHAR(100)	NOT NULL,
-	Itm_let		VARCHAR(10)	NOT NULL,
+	Itm_let		VARCHAR(10) NULL DEFAULT NULL,
 	Itm_mar		VARCHAR(50)	NOT NULL,
 	Itm_mod		VARCHAR(50)	NOT NULL,
 	Itm_magn	VARCHAR(50)	NOT NULL,
 	Itm_almax	INT	NOT NULL,
 	Itm_almin	INT	NOT NULL,
 	Itm_res 	DOUBLE 		NOT NULL,
+    Itm_eliminado	BOOLEAN	NOT NULL DEFAULT FALSE,
 	PRIMARY KEY(Itm_id)
 ) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS item_cliente;
-CREATE TABLE item_cliente
-(
-	ItmC_id		INT	NOT NULL AUTO_INCREMENT,
+CREATE TABLE item_cliente(
+	ItmC_id			INT	NOT NULL AUTO_INCREMENT,
     ItmC_Itm_id		INT	NOT NULL REFERENCES item(Itm_id),
-    ItmC_Cli_id	INT NOT NULL REFERENCES cliente(Cli_id),
+    ItmC_Cli_id		INT NOT NULL REFERENCES cliente(Cli_id),
     ItmC_serial		VARCHAR(50)	NOT NULL,
     ItmC_internId	VARCHAR(50)	NULL,
-	ItmC_almax	VARCHAR(50)	NOT NULL,
-	ItmC_almin	VARCHAR(50)	NOT NULL,
-    TtmC_uso VARCHAR(50) NULL,
+	ItmC_almax		INT	NOT NULL,
+	ItmC_almin		INT	NOT NULL,
+    TtmC_uso 		VARCHAR(50) NULL,
+    ItmC_eliminado	BOOLEAN		NOT NULL,
 	PRIMARY KEY(Itmc_id)
 ) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS cliente;
-CREATE TABLE cliente
-(
-	Cli_id		INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE cliente(
+	Cli_id		INT NOT NULL AUTO_INCREMENT UNIQUE,
 	Cli_nit		VARCHAR(45)	NOT NULL,
 	Cli_emp		VARCHAR(100)	NOT NULL,
 	Cli_cont_carg	VARCHAR(50)	NULL,
@@ -62,8 +60,7 @@ CREATE TABLE cliente
 ) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS orden_compra;
-CREATE TABLE orden_compra
-(
+CREATE TABLE orden_compra(
 	Ordc_id	 	INT NOT NULL AUTO_INCREMENT,
 	Ordc_preciotol	INT		NOT NULL,
     Ordc_precioFianl INT NOT NULL,
@@ -75,8 +72,7 @@ CREATE TABLE orden_compra
 ) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS orden_compra_espec;
-CREATE TABLE orden_compra_espec
-(
+CREATE TABLE orden_compra_espec(
 	OrdEs_id		INT	NOT NULL AUTO_INCREMENT,
 	OrdEs_Ordc_id		INT 		NOT NULL REFERENCES orden_compra(OrdC_id) ,
 	OrdEs_ItemC_id	VARCHAR(50)	NOT NULL REFERENCES item_cliente(ItmC_id),
@@ -91,8 +87,7 @@ CREATE TABLE orden_compra_espec
 ) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS punto;
-CREATE TABLE punto
-(
+CREATE TABLE punto(
 	Pun_id	INT	NOT NULL AUTO_INCREMENT,
     Pun_OrdEs_id INT NOT NULL REFERENCES orden_compra_espec(OrdC_id),
     Pun_punto INT NOT NULL,
@@ -130,7 +125,7 @@ CREATE TABLE certificado(
 	PRIMARY KEY(Cert_id)
 ) ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS certificad_sonda;
+DROP TABLE IF EXISTS certificado_sonda;
 CREATE TABLE certificado_sonda(
 	Cert_id 	INT	NOT NULL REFERENCES certificado(Cert_id),
     Son_id		INT NOT NULL REFERENCES sonda(Son_id),
@@ -144,7 +139,7 @@ CREATE TABLE sonda(
 	PRIMARY KEY(Son_id)
 )	ENGINE=InnoDB;
 
-DROP TABLE IF EXISTS certidicado_patron;
+DROP TABLE IF EXISTS certificado_patron;
 CREATE TABLE certificado_patron(
 	Cert_id 	INT	NOT NULL REFERENCES certificado(Cert_id),
     Pat_id		INT NOT NULL REFERENCES sonda(Pat_id),
@@ -181,8 +176,7 @@ CREATE TABLE resumen_estadistico(
 )ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS termometro;
-CREATE TABLE termometro
-(
+CREATE TABLE termometro(
 	Term_Cert_id	INT	NOT NULL REFERENCES certificado(Cert_id),
 	Term_Pun_id 	INT 	NOT NULL REFERENCES punto(Pun_id),
 	Term_estp1		DOUBLE	NOT NULL,
@@ -192,8 +186,7 @@ CREATE TABLE termometro
 ) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS camara;
-CREATE TABLE camara
-(
+CREATE TABLE camara(
 	Cam_Cert_id 	INT 		NOT NULL REFERENCES certificado(Cert_id),
 	Cam_Pun_id		DOUBLE		NOT NULL REFERENCES punto(Pun_id),
 	Cam_efcar		DOUBLE		NOT NULL,
@@ -204,8 +197,7 @@ CREATE TABLE camara
 ) ENGINE=InnoDB;
 
 DROP TABLE IF EXISTS bloque;
-CREATE TABLE bloque
-(
+CREATE TABLE bloque(
 	Bloq_Cert_id 	INT 		NOT NULL REFERENCES certificado(Cert_id),
 	Bloq_Pun_id		DOUBLE		NOT NULL REFERENCES punto(Pun_id),
 	Bloq_uniax		DOUBLE		NOT NULL,
@@ -234,3 +226,5 @@ CREATE TABLE zonaBa(
 	ZonBa_grad	 	DOUBLE	NOT NULL,
 	PRIMARY KEY(ZonBa_Cert_id, ZonBa_Pun_id, ZonBa_nom)
 )ENGINE=InnoDB;
+
+-- 

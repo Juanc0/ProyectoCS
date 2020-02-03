@@ -1,2 +1,5 @@
 impement and use transactions to signup newUser with his newClient details (signupController)
-implement updateUser, updateClient
+implement "delete" item_cliente after "delete" an item
+al actualizar la lista de items limpiar la de sub items
+
+share https://www.youtube.com/watch?v=14hwlv3qIGo

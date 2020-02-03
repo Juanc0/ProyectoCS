@@ -1,42 +1,66 @@
 /*PROCEDIMIENTOS*/
 
-/*auth*/
-DROP PROCEDURE IF EXISTS checkUser;
+/* ########## ########## ########## ########## ########## AUTH ########## ########## ########## ########## ########## */
+
+DROP FUNCTION IF EXISTS userExist;
 DELIMITER $$
-CREATE PROCEDURE checkUser(IN ccnit VARCHAR(50), IN contra VARCHAR(50))
+CREATE FUNCTION userExist(ccnit VARCHAR(50))
+RETURNS BOOLEAN
+DETERMINISTIC
 BEGIN
-	SELECT Usu_id FROM Usuario WHERE Usu_ccnit = ccnit AND Usu_contra = contra limit 1;
+	RETURN EXISTS(SELECT Usu_id FROM usuario WHERE Usu_ccnit = ccnit);
 END $$
 DELIMITER ;
 
-/*user*/
-DROP PROCEDURE IF EXISTS createSimpleUser;
+DROP FUNCTION IF EXISTS authUser;
 DELIMITER $$
-CREATE PROCEDURE createSimpleUser(
-	IN ccnit VARCHAR(50),
-    IN nick VARCHAR(50),
-    IN contra VARCHAR(50))
+CREATE FUNCTION authUser(ccnit VARCHAR(50), contra VARCHAR(50))
+RETURNS INTEGER
+DETERMINISTIC
 BEGIN
-	INSERT INTO	usuario(	Usu_ccnit,	Usu_nombre,	Usu_contra	)
-				VALUES(		ccnit,		nick,		contra		);
+	RETURN (SELECT Usu_id FROM usuario WHERE Usu_ccnit = ccnit AND Usu_contra = contra);
 END $$
 DELIMITER ;
 
-/*user*/
-DROP PROCEDURE IF EXISTS createClientUser;
+/* ########## ########## ########## ########## ########## USER ########## ########## ########## ########## ########## */
+
+DROP PROCEDURE IF EXISTS createUser;
 DELIMITER $$
-CREATE PROCEDURE createClientUser(
+CREATE PROCEDURE createUser(
 	IN ccnit VARCHAR(50),
     IN nick VARCHAR(50),
     IN contra VARCHAR(50),
-    IN clientId INT)
+    IN clientId INT,
+    IN esAses BOOLEAN,
+    IN esLab BOOLEAN,
+    IN esMetro BOOLEAN,
+	IN esGerente BOOLEAN,
+    IN esSu BOOLEAN)
 BEGIN
-	INSERT INTO	usuario(	Usu_ccnit,	Usu_nombre,	Usu_contra,	Usu_Cli_id	)
-				VALUES(		ccnit,		nick,		contra,		clientId	);
+	INSERT INTO	usuario(
+		Usu_ccnit,
+		Usu_nombre,
+		Usu_contra,
+		Usu_Cli_id,
+		Usu_esAsesor,
+		Usu_esLaboratorista,
+		Usu_esMetrologo,
+		Usu_esGerente,
+		Usu_esSu
+    )VALUES(
+		ccnit,
+		nick,
+        contra,
+        clientId,
+		esAses,
+		esLab,
+		esMetro,
+		esGerente,
+		esSu
+	);
 END $$
 DELIMITER ;
 
-/*user*/
 DROP PROCEDURE IF EXISTS getUser;
 DELIMITER $$
 CREATE PROCEDURE getUser(IN idUsuario INT)
@@ -47,8 +71,8 @@ BEGIN
 		Usu_nombre,
 		Usu_contra,
 		Usu_Cli_id,
-		Usu_Ases_id,
-		Usu_Lab_id,
+		Usu_esAsesor,
+		Usu_esLaboratorista,
 		Usu_esMetrologo,
 		Usu_esGerente,
 		Usu_esSu
@@ -56,7 +80,6 @@ BEGIN
 END $$
 DELIMITER ;
 
-/*user*/
 DROP PROCEDURE IF EXISTS updateUser;
 DELIMITER $$
 CREATE PROCEDURE updateUser(
@@ -65,8 +88,8 @@ CREATE PROCEDURE updateUser(
 	IN nombre VARCHAR(50),
 	IN contra VARCHAR(50),
 	IN Cli_id INT,
-	IN Ases_id INT,
-	IN Lab_id INT,
+    IN esAses BOOLEAN,
+    IN esLab BOOLEAN,
 	IN esMetrologo BOOLEAN,
 	IN esGerente BOOLEAN,
 	IN esSu BOOLEAN)
@@ -77,8 +100,8 @@ BEGIN
 		Usu_nombre = nombre,
 		Usu_contra = contra,
 		Usu_Cli_id = Cli_id,
-		Usu_Ases_id = Ases_id,
-		Usu_Lab_id = Lab_id,
+		Usu_esAsesor = esAses,
+		Usu_esLaboratorista = esLab,
 		Usu_esMetrologo = esMetrologo,
 		Usu_esGerente = esGerente,
 		Usu_esSu = esSu
@@ -86,12 +109,12 @@ BEGIN
 END $$
 DELIMITER ;
 
+/* ########## ########## ########## ########## ########## CLIENT ########## ########## ########## ########## ########## */
 
-
-/*client*/
 DROP PROCEDURE IF EXISTS createClient;
 DELIMITER $$
 CREATE PROCEDURE createClient(
+    OUT id		INT,
 	IN nit		VARCHAR(45),
 	IN emp		VARCHAR(100),
 	IN carg		VARCHAR(50),
@@ -99,7 +122,8 @@ CREATE PROCEDURE createClient(
 	IN fax		VARCHAR(50),
 	IN email	VARCHAR(100),
 	IN ciu		VARCHAR(25),
-	IN dir		VARCHAR(100))
+	IN dir		VARCHAR(100),
+    IN estado	VARCHAR(2))
 BEGIN
 	INSERT INTO cliente(
 			Cli_nit,
@@ -109,12 +133,13 @@ BEGIN
 			Cli_fax,
 			Cli_email,
 			Cli_ciu,
-			Cli_dir
-    ) VALUES(nit, emp, carg, tel, fax, email, ciu, dir);
+			Cli_dir,
+            Cli_estado
+    ) VALUES(nit, emp, carg, tel, fax, email, ciu, dir, estado);
+    SET id = LAST_INSERT_ID();
 END $$
 DELIMITER ;
 
-/*client*/
 DROP PROCEDURE IF EXISTS getClient;
 DELIMITER $$
 CREATE PROCEDURE getClient(IN id INT)
@@ -129,12 +154,11 @@ BEGIN
 		Cli_email,
 		Cli_ciu,
 		Cli_dir,
-        Cli_idart
+        Cli_estado
 	FROM cliente WHERE Cli_id = id;
 END $$
 DELIMITER ;
 
-/*client*/
 DROP PROCEDURE IF EXISTS updateClient;
 DELIMITER $$
 CREATE PROCEDURE updateClient(
@@ -147,7 +171,7 @@ CREATE PROCEDURE updateClient(
 	IN email	VARCHAR(100),
 	IN ciu		VARCHAR(25),
 	IN dir		VARCHAR(100),
-	IN idart	BOOLEAN)
+	IN estado	VARCHAR(2))
 BEGIN
 	UPDATE cliente
     SET
@@ -158,72 +182,158 @@ BEGIN
 		Cli_fax = fax,
 		Cli_email = email,
 		Cli_ciu = ciu,
-		Cli_dir = dir
+		Cli_dir = dir,
+        Cli_estado = estado
 	WHERE Cli_id = id;
 END $$
 DELIMITER ;
 
-/*client*/
-DROP PROCEDURE IF EXISTS getClientId;
+DROP FUNCTION IF EXISTS getClientId;
 DELIMITER $$
-CREATE PROCEDURE getClientId(IN nit VARCHAR(50)/*, out id int*/)
+CREATE FUNCTION getClientId(nit VARCHAR(50))
+RETURNS INTEGER
+DETERMINISTIC
 BEGIN
-	SELECT Cli_id /*INTO id*/ FROM cliente WHERE Cli_nit = nit limit 1;
+	RETURN (SELECT Cli_id FROM cliente WHERE Cli_nit = nit limit 1);
 END $$
 DELIMITER ;
 
+/* ########## ########## ########## ########## ########## ITEM ########## ########## ########## ########## ########## */
 
-
-/*SIGNUP*/
-/*DROP PROCEDURE IF EXISTS updateUserClientId;
-DELIMITER $$
-CREATE PROCEDURE updateUserClientId(IN userId INT, IN clientId INT)
-BEGIN		
-	UPDATE usuario SET Cli_id = clientId WHERE Usu_id = userId;
-END $$
-DELIMITER ;*/
-
-/*client*/
 DROP PROCEDURE IF EXISTS getItems;
 DELIMITER $$
-CREATE PROCEDURE getItems(IN clientId VARCHAR(50))
+CREATE PROCEDURE getItems(IN clientId INT)
 BEGIN
-	SELECT * FROM item join cliente on Itm_Cli_id = clientId;
+	SELECT * FROM item JOIN item_cliente ON Itm_id = ItmC_Itm_id WHERE  ItmC_Cli_id = clientId  AND Itm_eliminado = FALSE;
 END $$
 DELIMITER ;
+
 
 DROP PROCEDURE IF EXISTS createItem;
 DELIMITER $$
 CREATE PROCEDURE createItem(
-	IN id		INT,
-	IN auxId		VARCHAR(100),
-	IN nom		VARCHAR(50),
+	INOUT id		INT,
+	IN nom		VARCHAR(100),
 	IN mar		VARCHAR(50),
 	IN _mod		VARCHAR(50),
-	IN ran	VARCHAR(100),
-	IN magn		VARCHAR(25),
-	IN almax		VARCHAR(100),
-	IN almin		VARCHAR(100),
+	IN magn		VARCHAR(50),
+	IN almax	INT,
+	IN almin	INT,
 	IN res		DOUBLE)
 BEGIN
 	INSERT INTO item(
 		Itm_id,
-		Itm_auxId,
 		Itm_nom,
+        Itm_let,
 		Itm_mar,
 		Itm_mod,
-		Itm_ran,
 		Itm_magn,
 		Itm_almax,
 		Itm_almin,
-		Itm_res
-    ) VALUES(id, auxId, nom, mar, _mod, ran, magn, almax, almin, res);
+		Itm_res,
+        Itm_eliminado
+    ) VALUES(id, nom, DEFAULT, mar, _mod, magn, almax, almin, res, DEFAULT);
+    set id = LAST_INSERT_ID();
+END $$
+DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS updateItem;
+DELIMITER $$
+CREATE PROCEDURE updateItem(
+	IN id		INT,
+	IN nom		VARCHAR(100),
+	IN let		VARCHAR(10),
+	IN mar		VARCHAR(50),
+	IN _mod		VARCHAR(50),
+	IN magn		VARCHAR(50),
+	IN almax	INT,
+	IN almin	INT,
+	IN res		DOUBLE)
+BEGIN
+	UPDATE item
+	SET
+		Itm_nom = nom,
+        Itm_let = let,
+		Itm_mar = mar,
+		Itm_mod = _mod,
+		Itm_magn = magn,
+		Itm_almax = almax,
+		Itm_almin = almin,
+		Itm_res = res,
+        Itm_eliminado = eliminado
+    WHERE Itm_id = id;
 END $$
 DELIMITER ;
 
 
 
+/* ########## ########## ########## ########## ########## ITEM_CLIENTE ########## ########## ########## ########## ########## */
 
+DROP PROCEDURE IF EXISTS getItemsClient;
+DELIMITER $$
+CREATE PROCEDURE getItemsClient(IN itemId INT, IN clientId INT)
+BEGIN
+	SELECT * FROM item_cliente WHERE ItmC_Itm_id = itemId AND ItmC_Cli_id = clientId AND ItmC_eliminado = FALSE;
+END $$
+DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS createItemClient;
+DELIMITER $$
+CREATE PROCEDURE createItemClient(
+	INOUT id		INT,
+	IN Itm_id		INT,
+	IN Cli_id		INT,
+	IN _serial		VARCHAR(50),
+	IN internId		VARCHAR(50),
+	IN almax		INT,
+	IN almin		INT,
+	IN uso			VARCHAR(50))
+BEGIN
+	INSERT INTO item_cliente(
+		ItmC_id,
+		ItmC_Itm_id,
+		ItmC_Cli_id,
+		ItmC_serial,
+		ItmC_internId,
+		ItmC_almax,
+		ItmC_almin,
+		ItmC_uso,
+		ItmC_eliminado
+    ) VALUES(id, Itm_id, Cli_id, _serial, internId, almax, almin, uso, DEFAULT);
+    set id = LAST_INSERT_ID();
+END $$
+DELIMITER ;
+
+
+
+DROP PROCEDURE IF EXISTS updateItemClient;
+DELIMITER $$
+CREATE PROCEDURE updateItemClient(
+	INOUT id		INT,
+	IN Itm_id		INT,
+	IN Cli_id		INT,
+	IN _serial		VARCHAR(50),
+	IN internId		VARCHAR(50),
+	IN almax		INT,
+	IN almin		INT,
+	IN uso			VARCHAR(50),
+    IN eliminado	BOOLEAN)
+BEGIN
+	UPDATE item_cliente
+    SET
+		ItmC_Itm_id = Itm_id,
+		ItmC_Cli_id = Cli_id,
+		ItmC_serial = _serial,
+		ItmC_internId = internId,
+		ItmC_almax = almax,
+		ItmC_almin = almin,
+		ItmC_uso = uso,
+		ItmC_eliminado = eliminado
+    WHERE ItmC_id = id;
+END $$
+DELIMITER ;
 
 
 
@@ -258,8 +368,9 @@ CREATE VIEW vt2 AS
 CREATE VIEW vt3 AS SELECT Cli_emp,Cli_email,Cli_tel,AVG(Ordc_preciotol) AS prom,SUM(Ordc_preciotol) AS total, COUNT(Cli_emp) AS serv FROM vt2 GROUP BY Cli_emp,Cli_email,Cli_tel; 
 
 /* Procedimiento de descuentos: Otorga un bono de descuento por cierto valor pagado en total de servicios */
-DELIMITER $$
+/*DELIMITER $$*/
 DROP PROCEDURE IF EXISTS dest;
+/*
 CREATE PROCEDURE dest(empresa VARCHAR(50))
 BEGIN
 	DECLARE des DOUBLE DEFAULT 0;
@@ -281,7 +392,7 @@ BEGIN
 	END IF;
 END $$
 
-DELIMITER ; 
+DELIMITER ; */
 
 
 /*
@@ -376,12 +487,11 @@ DROP TRIGGER IF EXISTS maxv;
 DELIMITER ||
 CREATE TRIGGER maxv BEFORE INSERT on certificado
 FOR EACH ROW BEGIN
-	SET @aa = NEW.Cert_num;
-	SET @ab = NEW.Cert_let;
+	SET @aa = NEW.Cert_id;
 	SET @ac = NEW.Cert_temax;
 	SET @ad = NEW.Cert_humax;
 
-	INSERT INTO valMax(fecha,Cert_num, Cert_let, Cert_temax,Cert_humax)
-	values ( CURDATE(), NEW.Cert_num,NEW.Cert_let,NEW.Cert_temax, NEW.Cert_humax);
+	INSERT INTO valMax(fecha,Cert_id, Cert_temax,Cert_humax)
+	values ( CURDATE(), NEW.Cert_id, NEW.Cert_temax, NEW.Cert_humax);
 END ||
 DELIMITER ;

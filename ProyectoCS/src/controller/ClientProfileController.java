@@ -22,9 +22,8 @@ public class ClientProfileController implements ActionListener {
     
     public ClientProfileController(UserModel user) {
         System.out.println("SignupController called");
-        persistence.setDbUser("profile", "profilePassword");
         this.user = user;
-        this.persistence.openConnection();
+        this.persistence.openConnection("main", "mainPassword");
         this.client = this.clientQueries.getClient(this.persistence.getConnection(), user.getClientId());
         this.persistence.closeConnection();
         this.clientProfileView.btnSave.addActionListener(this);
@@ -91,7 +90,7 @@ public class ClientProfileController implements ActionListener {
             if(!this.areMandatoryFieldsFull){
                 JOptionPane.showMessageDialog(this.clientProfileView, "there are mandatory fields empty");
             }else{
-                this.persistence.openConnection();
+                this.persistence.openConnection("main", "mainPassword");
                 // (without transactions) In God we trust
                 this.userQueries.updateUser(this.persistence.getConnection(), this.user);
                 this.clientQueries.updateClient(this.persistence.getConnection(), this.client);

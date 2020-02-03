@@ -17,7 +17,7 @@ public class LoginController implements ActionListener {
 
     public LoginController() {
         System.out.println("LoginController called");
-        persistence.setDbUser("auth", "authPassword");
+        this.persistence.setDbUser("auth", "authPassword");
         this.loginView.btnLogin.addActionListener(this);
         this.loginView.btnSignup.addActionListener(this);
         this.loginView.setTitle("Iniciar Sesión");
@@ -26,19 +26,26 @@ public class LoginController implements ActionListener {
     }
     
     public boolean loginAction(String ccnit, String password){
-        this.persistence.openConnection();
-        int userId = this.loginQueries.checkUser(this.persistence.getConnection(), ccnit, password);
-        if(userId == 0){
-            JOptionPane.showMessageDialog(this.loginView, "wrong ccnit or password");
-            return false;
-        }
-        UserModel currUser = this.userQueries.getUser(this.persistence.getConnection(), userId);
-        System.out.println("success loegin");
+        this.persistence.openConnection("auth", "authPassword");
+        boolean userExist = this.loginQueries.userExist(this.persistence.getConnection(), ccnit);
+        int userId = this.loginQueries.authUser(this.persistence.getConnection(), ccnit, password);
         this.persistence.closeConnection();
         
-        this.loginView.dispose();
-        new MainController(currUser);
-        return true;
+        if(ccnit.isEmpty() || ccnit.isBlank() || password.isEmpty() || password.isEmpty()){
+            JOptionPane.showMessageDialog(this.loginView, "Empty parameters");
+        }else if(!userExist){
+            JOptionPane.showMessageDialog(this.loginView, "Wrong ccnit");
+        }else if(userId == 0){
+            JOptionPane.showMessageDialog(this.loginView, "Wrong password");
+        }else{
+            this.persistence.openConnection("auth", "authPassword");
+            UserModel currUser = this.userQueries.getUser(this.persistence.getConnection(), userId);
+            this.persistence.closeConnection();
+            this.loginView.dispose();
+            new MainController(currUser);
+            return true;
+        }
+        return false;
     }
     
     @Override

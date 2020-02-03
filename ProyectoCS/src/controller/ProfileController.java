@@ -21,7 +21,6 @@ public class ProfileController implements ActionListener {
     
     public ProfileController(UserModel user) {
         System.out.println("SignupController called");
-        persistence.setDbUser("profile", "profilePassword");
         this.user = user;
         this.profileView.btnSave.addActionListener(this);
         this.profileView.btnCancel.addActionListener(this);
@@ -65,7 +64,7 @@ public class ProfileController implements ActionListener {
             if(!this.areMandatoryFieldsFull){
                 JOptionPane.showMessageDialog(this.profileView, "there are mandatory fields empty");
             }else{
-                this.persistence.openConnection();
+                this.persistence.openConnection("main", "mainPassword");
                 // (without transactions) In God we trust
                 this.userQueries.updateUser(this.persistence.getConnection(), this.user);
                 System.out.println("success update (I guess)");
