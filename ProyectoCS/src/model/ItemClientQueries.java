@@ -9,6 +9,31 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class ItemClientQueries {
+    
+    public ItemClientModel getItemClient(Connection conn, int itemClientId){
+        String query = "{call getItemClient(?) }";
+        try {
+            CallableStatement cs = conn.prepareCall(query);
+            cs.setInt(1, itemClientId);
+            ResultSet rs = cs.executeQuery();
+            if(rs.next()){
+                return new ItemClientModel(
+                    rs.getInt("ItmC_id"),
+                    rs.getInt("ItmC_Itm_id"),
+                    rs.getInt("ItmC_Cli_id"),
+                    rs.getString("ItmC_serial"),
+                    rs.getString("ItmC_internId"),
+                    rs.getInt("ItmC_almax"),
+                    rs.getInt("ItmC_almin"),
+                    rs.getString("ItmC_uso"),
+                    rs.getBoolean("ItmC_eliminado")
+                );
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+        return null;
+    }
     public ArrayList<ItemClientModel> getItemsClient(Connection conn, int itemId, int userId){
         String query = "{call getItemsClient(?, ?) }";
         ArrayList<ItemClientModel> itemsClient = new ArrayList();
@@ -31,7 +56,6 @@ public class ItemClientQueries {
                 ));
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getSQLState());
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         return itemsClient;
@@ -52,13 +76,12 @@ public class ItemClientQueries {
             cs.execute();
             return cs.getInt(1);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getSQLState());
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         return 0;// should return the id
     }
     public void updateItemClient(Connection conn, ItemClientModel itemClient){
-        String query = "{call updateItemClient(?, ?, ?, ?, ?, ?, ?, ?) }";
+        String query = "{call updateItemClient(?, ?, ?, ?, ?, ?, ?, ?, ?) }";
         try {
             CallableStatement cs = conn.prepareCall(query);
             cs.setInt(1, itemClient.getId());
@@ -72,8 +95,28 @@ public class ItemClientQueries {
             cs.setBoolean(9, itemClient.getDeleted());
             cs.execute();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getSQLState());
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
+    
+    public void deleteItemClient(Connection conn, int itemClientId){
+        String query = "{call deleteItemClient(?) }";
+        try {
+            CallableStatement cs = conn.prepareCall(query);
+            cs.setInt(1, itemClientId);
+            cs.execute();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }    public void deleteItemsClient(Connection conn, int itemId){
+        String query = "{call deleteItemsClient(?) }";
+        try {
+            CallableStatement cs = conn.prepareCall(query);
+            cs.setInt(1, itemId);
+            cs.execute();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
+        }
+    }
+    
 }

@@ -17,6 +17,7 @@ public class UpdateItemController implements ActionListener{
     private ItemQueries itemQueries = new ItemQueries();
     
     public UpdateItemController(MainController mainController, ItemModel item) {
+        
         this.mainController = mainController;
         this.item = item;
         System.out.println("UpdateItemController called");
@@ -24,6 +25,7 @@ public class UpdateItemController implements ActionListener{
         this.updateItemView.btnSave.addActionListener(this);
         this.updateItemView.setTitle("Modificar item");
         this.updateItemView.setLocationRelativeTo(null);
+        this.updateItemView.setVisible(true);
         this.initializeView();
     }
     
@@ -33,6 +35,7 @@ public class UpdateItemController implements ActionListener{
         this.updateItemView.txtBrand.setText(this.item.getBrand());
         this.updateItemView.txtModel.setText(this.item.getModel());
         this.updateItemView.txtMagnitude.setText(this.item.getMagnitude());
+        this.updateItemView.txtScale.setText(this.item.getScale());
         this.updateItemView.spinMaxRange.setValue(this.item.getMaxRange());
         this.updateItemView.spinMinRange.setValue(this.item.getMinRange());
         this.updateItemView.spinPrecision.setValue(this.item.getPrecision());
@@ -53,13 +56,14 @@ public class UpdateItemController implements ActionListener{
             checkContent(this.updateItemView.txtBrand.getText()),
             checkContent(this.updateItemView.txtModel.getText()),
             checkContent(this.updateItemView.txtMagnitude.getText()),
-            Integer.parseInt(checkContent(String.valueOf(this.updateItemView.spinMaxRange.getValue()))),
-            Integer.parseInt(checkContent(String.valueOf(this.updateItemView.spinMinRange.getValue()))),
-            Double.parseDouble(checkContent(String.valueOf(this.updateItemView.spinPrecision.getValue()))));
+            (int)this.updateItemView.spinMaxRange.getValue(),
+            (int)this.updateItemView.spinMinRange.getValue(),
+            checkContent(this.updateItemView.txtScale.getText()),
+            (double)this.updateItemView.spinPrecision.getValue());
         if(!this.areMandatoryFieldsFull){
             JOptionPane.showMessageDialog(this.updateItemView, "there are mandatory fields empty");
         }else{
-            this.persistence.openConnection("client","clientPassword");
+            this.persistence.openConnection("cliente","clientePassword");
             this.itemQueries.updateItem(this.persistence.getConnection(), this.item);
             this.persistence.closeConnection();
             this.updateItemView.dispose();

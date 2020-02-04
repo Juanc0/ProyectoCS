@@ -57,9 +57,10 @@ public class CreateItemController implements ActionListener{
             checkContent(this.createItemView.txtBrand.getText()),
             checkContent(this.createItemView.txtModel.getText()),
             checkContent(this.createItemView.txtMagnitude.getText()),
-            Integer.parseInt(checkContent(String.valueOf(this.createItemView.spinMaxRange.getValue()))),
-            Integer.parseInt(checkContent(String.valueOf(this.createItemView.spinMinRange.getValue()))),
-            Double.parseDouble(checkContent(String.valueOf(this.createItemView.spinPrecision.getValue()))));
+            (int)this.createItemView.spinMaxRange.getValue(),
+            (int)this.createItemView.spinMinRange.getValue(),
+            checkContent(this.createItemView.txtScale.getText()),
+            (double)this.createItemView.spinPrecision.getValue());
         ItemClientModel newItemClient = new ItemClientModel(
             0,
             clientId,
@@ -74,9 +75,7 @@ public class CreateItemController implements ActionListener{
             JOptionPane.showMessageDialog(this.createItemView, "there are mandatory fields empty");
         }else{
             this.persistence.openConnection("cliente","clientePassword");
-            int conchaaaaaa = this.itemQueries.createItem(this.persistence.getConnection(), newItem);
-            System.out.println(conchaaaaaa);
-            newItemClient.setItemId(conchaaaaaa);
+            newItemClient.setItemId(this.itemQueries.createItem(this.persistence.getConnection(), newItem));
             while(this.copies-- > 0)
                 this.itemClientQueries.createItemClient(this.persistence.getConnection(), newItemClient);
             this.persistence.closeConnection();

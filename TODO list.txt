@@ -1,5 +1,7 @@
 impement and use transactions to signup newUser with his newClient details (signupController)
+	and create item - itemClient
 implement "delete" item_cliente after "delete" an item
-al actualizar la lista de items limpiar la de sub items
+interface note (optional) to create or update instances
+block itemClient insert witouht a item instance
 
 share https://www.youtube.com/watch?v=14hwlv3qIGo

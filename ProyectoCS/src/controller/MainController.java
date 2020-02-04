@@ -18,6 +18,7 @@ public class MainController implements ActionListener, MouseListener{
     private Persistence persistence = new Persistence();
     private UserModel currUser;
     private int selectedItemId = 0;
+    private int selectedItemClientId = 0;
     private ArrayList<ItemModel> items;
     private ArrayList<ItemClientModel> itemsClient;
     private ItemQueries itemQueries = new ItemQueries();
@@ -28,6 +29,16 @@ public class MainController implements ActionListener, MouseListener{
     public MainController(UserModel currUser) {
         this.currUser = currUser;
         System.out.println("ClientController called");
+        if(!this.currUser.getIsManager()){
+            this.mainView.tabs.remove(3);
+        }
+        if(!this.currUser.getIsAdviser()){
+            this.mainView.tabs.remove(2);
+        }
+        if(this.currUser.getClientId() == 0){
+            this.mainView.tabs.remove(1);
+            this.mainView.tabs.remove(0);
+        }
         this.mainView.btnProfile.addActionListener(this);
         this.mainView.btnLogout.addActionListener(this);
         this.mainView.btnItemsAdd.addActionListener(this);
@@ -43,6 +54,7 @@ public class MainController implements ActionListener, MouseListener{
         this.mainView.setLocationRelativeTo(null);
         this.mainView.setVisible(true);
         this.personalizeView();
+        this.refreshItemsListTable();
     }
     
     private void personalizeView(){
@@ -71,12 +83,14 @@ public class MainController implements ActionListener, MouseListener{
             model.addRow(new Object[]{
                 item.getId(),
                 item.getName(),
+                item.getType(),
                 item.getBrand(),
                 item.getModel(),
                 item.getMagnitude(),
                 item.getMaxRange(),
                 item.getMinRange(),
-                item.getPrecision()
+                item.getPrecision(),
+                item.getScale()
             });
         }
         this.mainView.tableItems.setModel(model);
@@ -101,7 +115,7 @@ public class MainController implements ActionListener, MouseListener{
                 itemClient.getDeleted()
             });
         }
-        this.mainView.tableItems.setModel(model);
+        this.mainView.tableItemsClient.setModel(model);
     }
     
 
@@ -120,42 +134,54 @@ public class MainController implements ActionListener, MouseListener{
         }else if(e.getSource() == this.mainView.btnItemsAdd){
             new CreateItemController(this, this.currUser.getClientId());
         }else if(e.getSource() == this.mainView.btnItemsDelete){
-            // query to "delete"
+            this.persistence.openConnection("cliente", "clientePassword");
+            this.itemClientQueries.deleteItemsClient(this.persistence.getConnection(), selectedItemClientId);
+            this.itemQueries.deleteItem(this.persistence.getConnection(), this.selectedItemId);
+            this.persistence.closeConnection();
+            this.refreshItemsListTable();
         }else if(e.getSource() == this.mainView.btnItemsRefresh){
-            refreshItemsListTable();
+            this.refreshItemsListTable();
         }
         
         else if(e.getSource() == this.mainView.btnItemsClientAdd){
             new CreateItemClientController(this, this.selectedItemId, this.currUser.getClientId());
         }else if(e.getSource() == this.mainView.btnItemsClientDelete){
-            // query to "delete"
+            this.persistence.openConnection("cliente", "clientePassword");
+            this.itemClientQueries.deleteItemClient(this.persistence.getConnection(), this.selectedItemClientId);
+            this.persistence.closeConnection();
+            this.refreshItemsClientListTable();
         }else if(e.getSource() == this.mainView.btnItemsClientRefresh){
-            refreshItemsClientListTable();
+            this.refreshItemsClientListTable();
         }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println("just for fun:\t\t\t"+e.getClickCount());
         if(e.getComponent() == this.mainView.tableItems){
             if (e.getClickCount() == 1) {
-                System.out.println("click on the first table\t\tone click");
-                // select specifics instances
-                // enable three buttons
+                int selectedRow = this.mainView.tableItems.getSelectedRow();
+                this.selectedItemId = (int) this.mainView.tableItems.getModel().getValueAt(selectedRow, 0);
+                this.refreshItemsClientListTable();
+                this.mainView.btnItemsDelete.setEnabled(true);
+                this.mainView.btnItemsClientAdd.setEnabled(true);
+                this.mainView.btnItemsClientRefresh.setEnabled(true);
             }
             if (e.getClickCount() > 1) {
-                System.out.println("click on the first table\t\tmultiple clicks");
-                // open update Item view
+                this.persistence.openConnection("cliente", "clientePassword");
+                ItemModel item = this.itemQueries.getItem(this.persistence.getConnection(), this.selectedItemId);
+                new UpdateItemController(this, item);
+                this.persistence.closeConnection();
             }
         }else if(e.getComponent() == this.mainView.tableItemsClient){
             if (e.getClickCount() == 1) {
-                System.out.println("click on the second table\t\tone click");
-                // select specifics instances
-                // enable three buttons
+                int selectedRow = this.mainView.tableItemsClient.getSelectedRow();
+                this.selectedItemClientId = (int) this.mainView.tableItemsClient.getModel().getValueAt(selectedRow, 0);
+                this.mainView.btnItemsClientDelete.setEnabled(true);
             }
             if (e.getClickCount() > 1) {
-                System.out.println("click on the second table\t\tmultiple clicks");
-                // open update Item view
+                this.persistence.openConnection("cliente", "clientePassword");
+                new UpdateItemClientController(this, this.itemClientQueries.getItemClient(this.persistence.getConnection(), this.selectedItemClientId));
+                this.persistence.closeConnection();
             }
         }
     }

@@ -9,10 +9,25 @@ public class ItemModel {
     private String magnitude;
     private int maxRange;
     private int minRange;
-    private Double precision  ;
+    private double precision;
+    private String scale;
     private boolean deleted;
-
-        public ItemModel(String name, String brand, String model, String magnitude, int maxRange, int minRange, double precision  ) {
+    
+    
+    public ItemModel() {
+        this.id = 0;
+        this.name = null;
+        this.type = null;
+        this.brand = null;
+        this.model = null;
+        this.magnitude = null;
+        this.maxRange = 0;
+        this.minRange = 0;
+        this.precision = 0.0;
+        this.scale = null;
+        this.deleted = false;
+    }
+    public ItemModel(String name, String brand, String model, String magnitude, int maxRange, int minRange, String scale, double precision ) {
         this.id = 0;
         this.name = name;
         this.type = null;
@@ -22,9 +37,10 @@ public class ItemModel {
         this.maxRange = maxRange;
         this.minRange = minRange;
         this.precision = precision;
+        this.scale = scale;
         this.deleted = false;
     }
-    public ItemModel(int id, String name, String type, String brand, String model, String magnitude, int maxRange, int minRange, double precision , boolean deleted) {
+    public ItemModel(int id, String name, String type, String brand, String model, String magnitude, int maxRange, int minRange, double precision, String scale, boolean deleted) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -34,6 +50,7 @@ public class ItemModel {
         this.maxRange = maxRange;
         this.minRange = minRange;
         this.precision = precision;
+        this.scale = scale;
         this.deleted = deleted;
     }
 
@@ -85,11 +102,17 @@ public class ItemModel {
     public void setMinRange(int minRange) {
         this.minRange = minRange;
     }
-    public Double getPrecision() {
+    public double getPrecision() {
         return this.precision;
     }
-    public void setPrecision(Double precision) {
+    public void setPrecision(double precision) {
         this.precision = precision ;
+    }
+    public String getScale() {
+        return this.scale;
+    }
+    public void setScale(String scale) {
+        this.scale = scale;
     }
     public boolean getDeleted() {
         return this.deleted;
@@ -97,6 +120,4 @@ public class ItemModel {
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
-    
-    
 }

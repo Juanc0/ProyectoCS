@@ -8,7 +8,7 @@ import model.ItemClientQueries;
 import model.Persistence;
 import view.UpdateItemClientView;
 
-public class updateItemClientController implements ActionListener{
+public class UpdateItemClientController implements ActionListener{
     private MainController mainController;
     private ItemClientModel itemClient;
     private boolean areMandatoryFieldsFull;
@@ -16,7 +16,7 @@ public class updateItemClientController implements ActionListener{
     private UpdateItemClientView updateItemClientView = new UpdateItemClientView();
     private ItemClientQueries itemClientQueries = new ItemClientQueries();
     
-    public updateItemClientController(MainController mainController, ItemClientModel itemClient) {
+    public UpdateItemClientController(MainController mainController, ItemClientModel itemClient) {
         this.mainController = mainController;
         this.itemClient = itemClient;
         
@@ -59,7 +59,7 @@ public class updateItemClientController implements ActionListener{
         if(!this.areMandatoryFieldsFull){
             JOptionPane.showMessageDialog(this.updateItemClientView, "there are mandatory fields empty");
         }else{
-            this.persistence.openConnection("client","clientPassword");
+            this.persistence.openConnection("cliente","clientePassword");
             this.itemClientQueries.updateItemClient(this.persistence.getConnection(), this.itemClient);
             this.persistence.closeConnection();
             this.updateItemClientView.dispose();

@@ -200,6 +200,13 @@ DELIMITER ;
 
 /* ########## ########## ########## ########## ########## ITEM ########## ########## ########## ########## ########## */
 
+DROP PROCEDURE IF EXISTS getItem;
+DELIMITER $$
+CREATE PROCEDURE getItem(IN itemId INT)
+BEGIN
+	SELECT * FROM item WHERE Itm_id = itemId limit 1;
+END $$
+DELIMITER ;
 
 DROP PROCEDURE IF EXISTS getItems;
 DELIMITER $$
@@ -219,7 +226,8 @@ CREATE PROCEDURE createItem(
 	IN magn		VARCHAR(50),
 	IN almax	INT,
 	IN almin	INT,
-	IN res		DOUBLE)
+	IN res		DOUBLE,
+    IN escala	VARCHAR(3))
 BEGIN
 	INSERT INTO item(
 		Itm_id,
@@ -231,8 +239,9 @@ BEGIN
 		Itm_almax,
 		Itm_almin,
 		Itm_res,
+        Itm_escala,
         Itm_eliminado
-    ) VALUES(id, nom, DEFAULT, mar, _mod, magn, almax, almin, res, DEFAULT);
+    ) VALUES(id, nom, DEFAULT, mar, _mod, magn, almax, almin, res, escala, DEFAULT);
     set id = LAST_INSERT_ID();
 END $$
 DELIMITER ;
@@ -249,7 +258,9 @@ CREATE PROCEDURE updateItem(
 	IN magn		VARCHAR(50),
 	IN almax	INT,
 	IN almin	INT,
-	IN res		DOUBLE)
+	IN res		DOUBLE,
+    IN escala	VARCHAR(3),
+    IN eliminado BOOLEAN)
 BEGIN
 	UPDATE item
 	SET
@@ -261,20 +272,44 @@ BEGIN
 		Itm_almax = almax,
 		Itm_almin = almin,
 		Itm_res = res,
+        Itm_escala = escala,
         Itm_eliminado = eliminado
     WHERE Itm_id = id;
 END $$
 DELIMITER ;
 
 
+DROP PROCEDURE IF EXISTS deleteItem;
+DELIMITER $$
+CREATE PROCEDURE deleteItem(IN id INT)
+BEGIN
+	UPDATE item SET Itm_eliminado = true WHERE Itm_id = id;
+END $$
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS recoverItem;
+DELIMITER $$
+CREATE PROCEDURE recoverItem(IN id INT)
+BEGIN
+	UPDATE item SET Itm_eliminado = false WHERE Itm_id = id;
+END $$
+DELIMITER ;
 
 /* ########## ########## ########## ########## ########## ITEM_CLIENTE ########## ########## ########## ########## ########## */
 
-DROP PROCEDURE IF EXISTS getItemsClient;
+DROP PROCEDURE IF EXISTS getItemClient;
 DELIMITER $$
-CREATE PROCEDURE getItemsClient(IN itemId INT, IN clientId INT)
+CREATE PROCEDURE getItemClient(IN itemId INT, IN clientId INT)
 BEGIN
-	SELECT * FROM item_cliente WHERE ItmC_Itm_id = itemId AND ItmC_Cli_id = clientId AND ItmC_eliminado = FALSE ;
+	SELECT * FROM item_cliente WHERE ItmC_Itm_id = itemId AND ItmC_Cli_id = clientId ;
+END $$
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS getItemClient;
+DELIMITER $$
+CREATE PROCEDURE getItemClient(IN itemClienteId INT)
+BEGIN
+	SELECT * FROM item_cliente WHERE ItmC_id = itemClienteId LIMIT 1;
 END $$
 DELIMITER ;
 
@@ -319,7 +354,7 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS updateItemClient;
 DELIMITER $$
 CREATE PROCEDURE updateItemClient(
-	INOUT id		INT,
+	IN id		INT,
 	IN Itm_id		INT,
 	IN Cli_id		INT,
 	IN _serial		VARCHAR(50),
@@ -344,6 +379,30 @@ END $$
 DELIMITER ;
 
 
+DROP PROCEDURE IF EXISTS deleteItemClient;
+DELIMITER $$
+CREATE PROCEDURE deleteItemClient(IN id INT)
+BEGIN
+	UPDATE item_cliente SET ItmC_eliminado = True WHERE ItmC_id = id;
+END $$
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS deleteItemsClient;
+DELIMITER $$
+CREATE PROCEDURE deleteItemsClient(IN itemId INT)
+BEGIN
+	UPDATE item_cliente SET ItmC_eliminado = True WHERE ItmC_Itm_id = itemId;
+END $$
+DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS recoverItemClient;
+DELIMITER $$
+CREATE PROCEDURE recoverItemClient(IN id INT)
+BEGIN
+	UPDATE item_cliente SET ItmC_eliminado = false WHERE ItmC_id = id;
+END $$
+DELIMITER ;
 
 /*
 ########################################################################################################################
