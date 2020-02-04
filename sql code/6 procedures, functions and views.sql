@@ -200,14 +200,14 @@ DELIMITER ;
 
 /* ########## ########## ########## ########## ########## ITEM ########## ########## ########## ########## ########## */
 
+
 DROP PROCEDURE IF EXISTS getItems;
 DELIMITER $$
 CREATE PROCEDURE getItems(IN clientId INT)
 BEGIN
-	SELECT * FROM item JOIN item_cliente ON Itm_id = ItmC_Itm_id WHERE  ItmC_Cli_id = clientId  AND Itm_eliminado = FALSE;
+	SELECT * FROM (SELECT distinct ItmC_Itm_id  FROM item_cliente WHERE ItmC_Cli_id = clientId) AS A JOIN item ON ItmC_Itm_id = Itm_id AND Itm_eliminado = FALSE ;
 END $$
 DELIMITER ;
-
 
 DROP PROCEDURE IF EXISTS createItem;
 DELIMITER $$
@@ -227,7 +227,7 @@ BEGIN
         Itm_let,
 		Itm_mar,
 		Itm_mod,
-		Itm_magn,
+		itemItm_magn,
 		Itm_almax,
 		Itm_almin,
 		Itm_res,
@@ -269,6 +269,14 @@ DELIMITER ;
 
 
 /* ########## ########## ########## ########## ########## ITEM_CLIENTE ########## ########## ########## ########## ########## */
+
+DROP PROCEDURE IF EXISTS getItemsClient;
+DELIMITER $$
+CREATE PROCEDURE getItemsClient(IN itemId INT, IN clientId INT)
+BEGIN
+	SELECT * FROM item_cliente WHERE ItmC_Itm_id = itemId AND ItmC_Cli_id = clientId AND ItmC_eliminado = FALSE ;
+END $$
+DELIMITER ;
 
 DROP PROCEDURE IF EXISTS getItemsClient;
 DELIMITER $$

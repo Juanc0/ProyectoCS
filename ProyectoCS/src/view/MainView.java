@@ -126,6 +126,7 @@ public class MainView extends javax.swing.JFrame {
         btnItemsClientDelete.setEnabled(false);
 
         btnItemsClientRefresh.setText("Actualizar");
+        btnItemsClientRefresh.setEnabled(false);
 
         javax.swing.GroupLayout itemsLayout = new javax.swing.GroupLayout(items);
         items.setLayout(itemsLayout);

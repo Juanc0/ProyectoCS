@@ -40,10 +40,10 @@ CREATE TABLE item_cliente
     ItmC_Cli_id	INT NOT NULL REFERENCES cliente(Cli_id),
     ItmC_serial		VARCHAR(50)	NOT NULL,
     ItmC_internId	VARCHAR(50)	NULL,
-	ItmC_almax	INT	NOT NULL,
-	ItmC_almin	INT	NOT NULL,
-    ItmC_uso VARCHAR(50) NULL,
-    ItmC_eliminado	BOOLEAN		NOT NULL,
+	ItmC_almax		INT	NOT NULL,
+	ItmC_almin		INT	NOT NULL,
+    ItmC_uso 		VARCHAR(50) NULL,
+    ItmC_eliminado	BOOLEAN		NOT NULL DEFAULT FALSE,
 	PRIMARY KEY(Itmc_id)
 ) ENGINE=InnoDB;
 
@@ -86,7 +86,7 @@ CREATE TABLE orden_compra_espec
 	OrdEs_obs	VARCHAR(100) 	NULL,
 	OrdEs_met	VARCHAR(300)	NOT NULL,
     OrdEs_mag	VARCHAR(50)	NOT NULL,
-	OrdEs_precioTotal	DOUBLE		NOT NULL,
+	OrdEs_precioTotal	DOUBLE	NOT NULL,
 	OrdEs_alMax		INT	NOT NULL,
     OrdEs_alMIN		INT	NOT NULL,
 	OrdEs_estado		VARCHAR(50)	NOT NULL,

@@ -14,8 +14,8 @@ public class ItemClientQueries {
         ArrayList<ItemClientModel> itemsClient = new ArrayList();
         try {
             CallableStatement cs = conn.prepareCall(query);
-            cs.setInt(1, userId);
-            cs.setInt(2, itemId);
+            cs.setInt(1, itemId);
+            cs.setInt(2, userId);
             ResultSet rs = cs.executeQuery();
             while(rs.next()){
                 itemsClient.add(new ItemClientModel(
@@ -31,7 +31,8 @@ public class ItemClientQueries {
                 ));
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getStackTrace());
+            JOptionPane.showMessageDialog(null, ex.getSQLState());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         return itemsClient;
     }
@@ -41,7 +42,7 @@ public class ItemClientQueries {
             CallableStatement cs = conn.prepareCall(query);
             cs.registerOutParameter(1, Types.INTEGER);
             cs.setInt(1, itemClient.getId());
-            cs.setInt(2, itemClient.getClientId());
+            cs.setInt(2, itemClient.getItemId());
             cs.setInt(3, itemClient.getClientId());
             cs.setString(4, itemClient.getSerial());
             cs.setString(5, itemClient.getInternId());
@@ -51,7 +52,8 @@ public class ItemClientQueries {
             cs.execute();
             return cs.getInt(1);
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getStackTrace());
+            JOptionPane.showMessageDialog(null, ex.getSQLState());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
         return 0;// should return the id
     }
@@ -70,7 +72,8 @@ public class ItemClientQueries {
             cs.setBoolean(9, itemClient.getDeleted());
             cs.execute();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, ex.getStackTrace());
+            JOptionPane.showMessageDialog(null, ex.getSQLState());
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }
 }

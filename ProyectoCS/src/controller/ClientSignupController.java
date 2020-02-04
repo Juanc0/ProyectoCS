@@ -12,8 +12,6 @@ import view.ClientSignupView;
 
 public class ClientSignupController implements ActionListener {
     private Persistence persistence = new Persistence();
-    private UserModel user = null;
-    private ClientModel client = null;
     private ClientQueries clientQueries = new ClientQueries();
     private UserQueries userQueries = new UserQueries();
     private ClientSignupView clientSignupView = new ClientSignupView();
@@ -54,31 +52,31 @@ public class ClientSignupController implements ActionListener {
             JOptionPane.showMessageDialog(this.clientSignupView, "passwords don't match");
         }else{
             ClientModel client = new ClientModel(
-                    checkContent("txtNit", this.clientSignupView.txtNit.getText()),
-                    checkContent("txtCompany", this.clientSignupView.txtCompany.getText()),
-                    checkContent("txtJob", this.clientSignupView.txtJob.getText()),
-                    checkContent("txtPhone", this.clientSignupView.txtPhone.getText()),
-                    checkContent("txtFax", this.clientSignupView.txtFax.getText()),
-                    checkContent("txtEmail", this.clientSignupView.txtEmail.getText()),
-                    checkContent("txtCity", this.clientSignupView.txtCity.getText()),
-                    checkContent("txtAddress", this.clientSignupView.txtAddress.getText()),
-                    "A");
+                checkContent("txtNit", this.clientSignupView.txtNit.getText()),
+                checkContent("txtCompany", this.clientSignupView.txtCompany.getText()),
+                checkContent("txtJob", this.clientSignupView.txtJob.getText()),
+                checkContent("txtPhone", this.clientSignupView.txtPhone.getText()),
+                checkContent("txtFax", this.clientSignupView.txtFax.getText()),
+                checkContent("txtEmail", this.clientSignupView.txtEmail.getText()),
+                checkContent("txtCity", this.clientSignupView.txtCity.getText()),
+                checkContent("txtAddress", this.clientSignupView.txtAddress.getText()),
+                "A");
             UserModel user = new UserModel(
-                    checkContent("txtCCNIT", this.clientSignupView.txtCCNIT.getText()),
-                    checkContent("txtName", this.clientSignupView.txtName.getText()),
-                    checkContent("password", pass));
+                checkContent("txtCCNIT", this.clientSignupView.txtCCNIT.getText()),
+                checkContent("txtName", this.clientSignupView.txtName.getText()),
+                checkContent("password", pass));
             if(!this.areMandatoryFieldsFull){
                 JOptionPane.showMessageDialog(this.clientSignupView, "there are mandatory fields empty");
             }else{
                 this.persistence.openConnection("auth", "authPassword");
                 // (without transactions) In God we trust
-                this.user.setClientId(this.clientQueries.createClient(this.persistence.getConnection(), this.client));
-                this.userQueries.createUser(this.persistence.getConnection(), this.user);
+                user.setClientId(this.clientQueries.createClient(this.persistence.getConnection(), client));
+                this.userQueries.createUser(this.persistence.getConnection(), user);
                 System.out.println("success signup (I guess)");
                 this.persistence.closeConnection();
 
                 this.clientSignupView.dispose();
-                new LoginController().loginAction(this.user.getCcnit(), this.user.getPasswrod());
+                new LoginController().loginAction(user.getCcnit(), user.getPasswrod());
             }
         }
         return true;
