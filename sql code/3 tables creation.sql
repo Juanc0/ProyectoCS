@@ -234,7 +234,7 @@ DROP TABLE IF EXISTS zonaBa;
 CREATE TABLE zonaBa(
 	ZonBa_Cert_id 	INT		NOT NULL REFERENCES certificado(Cert_id),
 	ZonBa_Pun_id	DOUBLE	NOT NULL REFERENCES punto(Pun_id),
-	ZonBa_nom 		INT 	NOT NULL,
+	ZonBa_nom 		VARCHAR(50) 	NOT NULL,
 	ZonBa_facor		INT		NOT NULL,
 	ZonBa_inc		DOUBLE	NOT NULL,
 	ZonBa_grad	 	DOUBLE	NOT NULL,

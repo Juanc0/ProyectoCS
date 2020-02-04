@@ -67,39 +67,39 @@ INSERT INTO orden_compra VALUES (default,	5,		1,	'1610350',	'1610350','2019-08-2
 
 
 /*punto-----------------------AI-----ORD_ES------PUNTO*/
-INSERT INTO punto VALUES (default,	1,	-30);
-INSERT INTO punto VALUES (default,	1,	-20);
-INSERT INTO punto VALUES (default,	1,	-10);
-INSERT INTO punto VALUES (default,	2,	50);
-INSERT INTO punto VALUES (default,	2,	75);
-INSERT INTO punto VALUES (default,	2,	100);
-INSERT INTO punto VALUES (default,	2,	150);
-INSERT INTO punto VALUES (default,	2,	200);
-INSERT INTO punto VALUES (default,	3,	-80);
-INSERT INTO punto VALUES (default,	4,	40);
-INSERT INTO punto VALUES (default,	4,	65);
-INSERT INTO punto VALUES (default,	5,	90);
-INSERT INTO punto VALUES (default,	5,	150);
-INSERT INTO punto VALUES (default,	5,	200);
-INSERT INTO punto VALUES (default,	6,	90);
-INSERT INTO punto VALUES (default,	6,	150);
-INSERT INTO punto VALUES (default,	6,	200);
-INSERT INTO punto VALUES (default,	7,	90);
-INSERT INTO punto VALUES (default,	7,	150);
-INSERT INTO punto VALUES (default,	7,	180);
-INSERT INTO punto VALUES (default,	8,	2);
-INSERT INTO punto VALUES (default,	8,	20);
-INSERT INTO punto VALUES (default,	8,	40);
-INSERT INTO punto VALUES (default,	8,	60);
-INSERT INTO punto VALUES (default,	8,	70);
-INSERT INTO punto VALUES (default,	8,	100);
-INSERT INTO punto VALUES (default,	8,	150);
-INSERT INTO punto VALUES (default,	8,	-20);
-INSERT INTO punto VALUES (default,	8,	-10);
+INSERT INTO punto VALUES (default,	1,	6,-30);
+INSERT INTO punto VALUES (default,	1,	7,-20);
+INSERT INTO punto VALUES (default,	1,	8,-10);
+INSERT INTO punto VALUES (default,	2,	14,50);
+INSERT INTO punto VALUES (default,	2,	16,75);
+INSERT INTO punto VALUES (default,	2,	19,100);
+INSERT INTO punto VALUES (default,	2,	24,150);
+INSERT INTO punto VALUES (default,	2,	28,200);
+INSERT INTO punto VALUES (default,	3,	1,-80);
+INSERT INTO punto VALUES (default,	4,	30,40);
+INSERT INTO punto VALUES (default,	4,	35,65);
+INSERT INTO punto VALUES (default,	5,	18,90);
+INSERT INTO punto VALUES (default,	5,	24,150);
+INSERT INTO punto VALUES (default,	5,	28,200);
+INSERT INTO punto VALUES (default,	6,	18,90);
+INSERT INTO punto VALUES (default,	6,	24,150);
+INSERT INTO punto VALUES (default,	6,	28,200);
+INSERT INTO punto VALUES (default,	7,	18,90);
+INSERT INTO punto VALUES (default,	7,	24,150);
+INSERT INTO punto VALUES (default,	7,	26,180);
+INSERT INTO punto VALUES (default,	8,	9,2);
+INSERT INTO punto VALUES (default,	8,	11,20);
+INSERT INTO punto VALUES (default,	8,	13,40);
+INSERT INTO punto VALUES (default,	8,	15,60);
+INSERT INTO punto VALUES (default,	8,	16,70);
+INSERT INTO punto VALUES (default,	8,	19,100);
+INSERT INTO punto VALUES (default,	8,	24,150);
+INSERT INTO punto VALUES (default,	8,	7,-20);
+INSERT INTO punto VALUES (default,	8,	8,-10);
 
 
 /*precio--------------------AI-----MAGNITUD------PUN_MIN---PUN_MAX-----PRECIO*/
-INSERT INTO precio VALUES (default,	'TEMPERATURA',	-80,	-70,	300000);
+INSERT INTO precio VALUES (default,	'TEMPERATURA',	-80,	-70,	300000); 
 INSERT INTO precio VALUES (default,	'TEMPERATURA',	-70,	-60,	282100);
 INSERT INTO precio VALUES (default,	'TEMPERATURA',	-60,	-50,	273150);
 INSERT INTO precio VALUES (default,	'TEMPERATURA',	-50,	-40,	264200);
@@ -143,14 +143,14 @@ INSERT INTO precio VALUES (default,	'HUMEDAD',		82,		86,		261500);
 INSERT INTO precio VALUES (default,	'HUMEDAD',		86,		90,		300000);
 
 /*certificado--------------------------AI---ORD_ES_id----temax---temin---humax---humin---trazmed-----lab_id*/
-INSERT INTO certificado VALUES (default,	1,			22.8,	21.6,	56.8,	48.5,	'BANNO  1D1310572',	6);
-INSERT INTO certificado VALUES (default,	2,			23.6,	22.0,	74.0,	55.0,	null,				7);
-INSERT INTO certificado VALUES (default,	3,			20.1,	20.1,	56.40,	56.40,	null,				6);
-INSERT INTO certificado VALUES (default,	4,			20.4,	19.9,	69.1,	65.7,	'BANNO  1D1310572',	7);
-INSERT INTO certificado VALUES (default,	5,			24.2,	20.8,	67.6,	46.5,	null,				6);
-INSERT INTO certificado VALUES (default,	6,			21.2,	21.1,	53.1,	47.3,	'BANNO  1D1310572',	6);
-INSERT INTO certificado VALUES (default,	7,			22.3,	21.1,	48.2,	46.5,	'BANNO  1D1310572',	7);
-INSERT INTO certificado VALUES (default,	8,			22.7,	20.4,	63,		46.5,	'BANNO  1D1310572',	6);
+INSERT INTO certificado VALUES (default,	1,	6,		22.8,	21.6,	56.8,	48.5,	'BANNO  1D1310572');
+INSERT INTO certificado VALUES (default,	2,	7,		23.6,	22.0,	74.0,	55.0,	null);
+INSERT INTO certificado VALUES (default,	3,	6,		20.1,	20.1,	56.40,	56.40,	null);
+INSERT INTO certificado VALUES (default,	4,	7,		20.4,	19.9,	69.1,	65.7,	'BANNO  1D1310572');
+INSERT INTO certificado VALUES (default,	5,	6,		24.2,	20.8,	67.6,	46.5,	null);
+INSERT INTO certificado VALUES (default,	6,	6,		21.2,	21.1,	53.1,	47.3,	'BANNO  1D1310572');
+INSERT INTO certificado VALUES (default,	7,	7,		22.3,	21.1,	48.2,	46.5,	'BANNO  1D1310572');
+INSERT INTO certificado VALUES (default,	8,	6,		22.7,	20.4,	63,		46.5,	'BANNO  1D1310572');
 
 
 /*certificado_num-------------cert_ID-----let------num*/
@@ -176,14 +176,14 @@ INSERT INTO sonda VALUES (default,		8);
 
 
 /*certificado_sonda-------------cert_ID-----son_id*/
-INSERT INTO sonda VALUES (3,		1);
-INSERT INTO sonda VALUES (3,		2);
-INSERT INTO sonda VALUES (3,		3);
-INSERT INTO sonda VALUES (3,		4);
-INSERT INTO sonda VALUES (3,		5);
-INSERT INTO sonda VALUES (3,		6);
-INSERT INTO sonda VALUES (3,		7);
-INSERT INTO sonda VALUES (3,		8);
+INSERT INTO certificado_sonda VALUES (3,		1);
+INSERT INTO certificado_sonda VALUES (3,		2);
+INSERT INTO certificado_sonda VALUES (3,		3);
+INSERT INTO certificado_sonda VALUES (3,		4);
+INSERT INTO certificado_sonda VALUES (3,		5);
+INSERT INTO certificado_sonda VALUES (3,		6);
+INSERT INTO certificado_sonda VALUES (3,		7);
+INSERT INTO certificado_sonda VALUES (3,		8);
 
 /*patron-----------------------pat_id AI-----pat_nom*/
 INSERT INTO patron VALUES (default,			'T-027');
@@ -193,21 +193,21 @@ INSERT INTO patron VALUES (default,			'935-14-116');
 
 
 /*certificado_patron-------------cert_ID-----pat_id*/
-INSERT INTO patron VALUES (1,		1);
-INSERT INTO patron VALUES (1,		2);
-INSERT INTO patron VALUES (2,		3);
-INSERT INTO patron VALUES (2,		4);
-INSERT INTO patron VALUES (3,		3);
-INSERT INTO patron VALUES (3,		4);
-INSERT INTO patron VALUES (4,		1);
-INSERT INTO patron VALUES (4,		2);
-INSERT INTO patron VALUES (5,		3);
-INSERT INTO patron VALUES (5,		4);
-INSERT INTO patron VALUES (6,		3);
-INSERT INTO patron VALUES (6,		4);
-INSERT INTO patron VALUES (7,		3);
-INSERT INTO patron VALUES (8,		1);
-INSERT INTO patron VALUES (8,		2);
+INSERT INTO certificado_patron VALUES (1,		1);
+INSERT INTO certificado_patron VALUES (1,		2);
+INSERT INTO certificado_patron VALUES (2,		3);
+INSERT INTO certificado_patron VALUES (2,		4);
+INSERT INTO certificado_patron VALUES (3,		3);
+INSERT INTO certificado_patron VALUES (3,		4);
+INSERT INTO certificado_patron VALUES (4,		1);
+INSERT INTO certificado_patron VALUES (4,		2);
+INSERT INTO certificado_patron VALUES (5,		3);
+INSERT INTO certificado_patron VALUES (5,		4);
+INSERT INTO certificado_patron VALUES (6,		3);
+INSERT INTO certificado_patron VALUES (6,		4);
+INSERT INTO certificado_patron VALUES (7,		3);
+INSERT INTO certificado_patron VALUES (8,		1);
+INSERT INTO certificado_patron VALUES (8,		2);
 
 
 /*estadistico-----------------_id AI-----prom--------max-----------min------dev*/
@@ -341,7 +341,7 @@ INSERT INTO resumen_estadistico VALUES (	2,  	8,			22,		23,		24,		0.19,		-0.84);
 INSERT INTO resumen_estadistico VALUES (	3,  	9,			25,		26,		27,		3.62,		-0.51);
 INSERT INTO resumen_estadistico VALUES (	4,  	10,			28,		29,		30,		1.44,		0.25);
 INSERT INTO resumen_estadistico VALUES (	4,  	11,			31,		32,		33,		1.46,		1.55);
-INSERT INTO resumen_estadistico VALUES (	5,  	14,			34,		35,		36,		1.65,		0.24);
+INSERT INTO resumen_estadistico VALUES (	5,  	12,			34,		35,		36,		1.65,		0.24);
 INSERT INTO resumen_estadistico VALUES (	5,  	13,			37,		38,		39,		0.79,		0.53);
 INSERT INTO resumen_estadistico VALUES (	5,  	14,			40,		41,		42,		1.15,		0.51);
 INSERT INTO resumen_estadistico VALUES (	6,  	15,			43,		44,		45,		1.46,		0.06);
@@ -389,45 +389,45 @@ INSERT INTO bloque VALUES (2,  8,	0.03,	0.32,	0.1);
 /*estba-----------------cert_ID-----pun_id----estp-----incert----facor*/
 INSERT INTO estba VALUES (5, 		14,		0.08,		0.17,		2);
 INSERT INTO estba VALUES (5, 		13,		0.03,		0.06,		2);
-INSERT INTO estba VALUES (5, 		14,		0.02,		0.05,		2);
+INSERT INTO estba VALUES (5, 		15,		0.02,		0.05,		2);
 
 
 /*zonba-----------------cert_ID-----pun_id--------nom---facor---inc---grad*/
-INSERT INTO zonba VALUES (5, 		 14,		'P1',	2,		0.11,	0.10);
-INSERT INTO zonba VALUES (5, 		 14,		'P2',	2,		0.21,	0.19);
-INSERT INTO zonba VALUES (5, 		 14,		'P3',	2,		0.23,	0.20);
-INSERT INTO zonba VALUES (5, 		 14,		'P4',	2,		0.04,	0.4);
-INSERT INTO zonba VALUES (5, 		 14,		'P5',	2,		0.24,	0.21);
-INSERT INTO zonba VALUES (5, 		 14,		'P6',	2,		0.10,	0.09);
-INSERT INTO zonba VALUES (5, 		 14,		'P7',	2,		0.03,	0.03);
-INSERT INTO zonba VALUES (5, 		 14,		'P8',	2,		0.3,	0.26);
-INSERT INTO zonba VALUES (5, 		 14,		'P9',	2,		2.63,	2.28);
-INSERT INTO zonba VALUES (5, 		 14,		'P10',	2,		0.57,	0.49);
-INSERT INTO zonba VALUES (5, 		 14,		'P11',	2,		1.05,	0.91);
-INSERT INTO zonba VALUES (5, 		 14,		'P14',	2,		1.51,	1.31);
+INSERT INTO zonaBa VALUES (5, 		 14,		'P1',	2,		0.11,	0.10);
+INSERT INTO zonaBa VALUES (5, 		 14,		'P2',	2,		0.21,	0.19);
+INSERT INTO zonaBa VALUES (5, 		 14,		'P3',	2,		0.23,	0.20);
+INSERT INTO zonaBa VALUES (5, 		 14,		'P4',	2,		0.04,	0.4);
+INSERT INTO zonaBa VALUES (5, 		 14,		'P5',	2,		0.24,	0.21);
+INSERT INTO zonaBa VALUES (5, 		 14,		'P6',	2,		0.10,	0.09);
+INSERT INTO zonaBa VALUES (5, 		 14,		'P7',	2,		0.03,	0.03);
+INSERT INTO zonaBa VALUES (5, 		 14,		'P8',	2,		0.3,	0.26);
+INSERT INTO zonaBa VALUES (5, 		 14,		'P9',	2,		2.63,	2.28);
+INSERT INTO zonaBa VALUES (5, 		 14,		'P10',	2,		0.57,	0.49);
+INSERT INTO zonaBa VALUES (5, 		 14,		'P11',	2,		1.05,	0.91);
+INSERT INTO zonaBa VALUES (5, 		 14,		'P14',	2,		1.51,	1.31);
 
-INSERT INTO zonba VALUES (5, 		 13,		'P1',	2,		0.04,	0.03);
-INSERT INTO zonba VALUES (5, 		 13,		'P2',	2,		0.09,	0.08);
-INSERT INTO zonba VALUES (5, 		 13,		'P3',	2,		0.13,	0.11);
-INSERT INTO zonba VALUES (5, 		 13,		'P4',	2,		0.14,	0.12;
-INSERT INTO zonba VALUES (5, 		 13,		'P5',	2,		0.07,	-0.06);
-INSERT INTO zonba VALUES (5, 		 13,		'P6',	2,		0.14,	-0.13);
-INSERT INTO zonba VALUES (5, 		 13,		'P7',	2,		0.03,	0.02);
-INSERT INTO zonba VALUES (5, 		 13,		'P8',	2,		0.00,	0.00);
-INSERT INTO zonba VALUES (5, 		 13,		'P9',	2,		0.99,	-0.85);
-INSERT INTO zonba VALUES (5, 		 13,		'P10',	2,		0.83,	-0.72);
-INSERT INTO zonba VALUES (5, 		 13,		'P11',	2,		0.69,	-0.60);
-INSERT INTO zonba VALUES (5, 		 13,		'P14',	2,		0.50,	-0.43);
+INSERT INTO zonaBa VALUES (5, 		 13,		'P1',	2,		0.04,	0.03);
+INSERT INTO zonaBa VALUES (5, 		 13,		'P2',	2,		0.09,	0.08);
+INSERT INTO zonaBa VALUES (5, 		 13,		'P3',	2,		0.13,	0.11);
+INSERT INTO zonaBa VALUES (5, 		 13,		'P4',	2,		0.14,	0.12);
+INSERT INTO zonaBa VALUES (5, 		 13,		'P5',	2,		0.07,	-0.06);
+INSERT INTO zonaBa VALUES (5, 		 13,		'P6',	2,		0.14,	-0.13);
+INSERT INTO zonaBa VALUES (5, 		 13,		'P7',	2,		0.03,	0.02);
+INSERT INTO zonaBa VALUES (5, 		 13,		'P8',	2,		0.00,	0.00);
+INSERT INTO zonaBa VALUES (5, 		 13,		'P9',	2,		0.99,	-0.85);
+INSERT INTO zonaBa VALUES (5, 		 13,		'P10',	2,		0.83,	-0.72);
+INSERT INTO zonaBa VALUES (5, 		 13,		'P11',	2,		0.69,	-0.60);
+INSERT INTO zonaBa VALUES (5, 		 13,		'P14',	2,		0.50,	-0.43);
 
-INSERT INTO zonba VALUES (5, 		 14,		'P1',	2,		0.01,	-0.01);
-INSERT INTO zonba VALUES (5, 		 14,		'P2',	2,		0.06,	0.05);
-INSERT INTO zonba VALUES (5, 		 14,		'P3',	2,		0.12,	0.11);
-INSERT INTO zonba VALUES (5, 		 14,		'P4',	2,		0.03,	0.02);
-INSERT INTO zonba VALUES (5, 		 14,		'P5',	2,		0.03,	0.02);
-INSERT INTO zonba VALUES (5, 		 14,		'P6',	2,		0.03,	0.02);
-INSERT INTO zonba VALUES (5, 		 14,		'P7',	2,		0.03,	0.02);
-INSERT INTO zonba VALUES (5, 		 14,		'P8',	2,		0.03,	0.02);
-INSERT INTO zonba VALUES (5, 		 14,		'P9',	2,		1.3,	-1.12);
-INSERT INTO zonba VALUES (5, 		 14,		'P10',	2,		0.93,	-0.80);
-INSERT INTO zonba VALUES (5, 		 14,		'P11',	2,		1.19,	-1.03);
-INSERT INTO zonba VALUES (5, 		 14,		'P12',	2,		1.11,	-0.96);
+INSERT INTO zonaBa VALUES (5, 		 15,		'P1',	2,		0.01,	-0.01);
+INSERT INTO zonaBa VALUES (5, 		 15,		'P2',	2,		0.06,	0.05);
+INSERT INTO zonaBa VALUES (5, 		 15,		'P3',	2,		0.12,	0.11);
+INSERT INTO zonaBa VALUES (5, 		 15,		'P4',	2,		0.03,	0.02);
+INSERT INTO zonaBa VALUES (5, 		 15,		'P5',	2,		0.03,	0.02);
+INSERT INTO zonaBa VALUES (5, 		 15,		'P6',	2,		0.03,	0.02);
+INSERT INTO zonaBa VALUES (5, 		 15,		'P7',	2,		0.03,	0.02);
+INSERT INTO zonaBa VALUES (5, 		 15,		'P8',	2,		0.03,	0.02);
+INSERT INTO zonaBa VALUES (5, 		 15,		'P9',	2,		1.3,	-1.12);
+INSERT INTO zonaBa VALUES (5, 		 15,		'P10',	2,		0.93,	-0.80);
+INSERT INTO zonaBa VALUES (5, 		 15,		'P11',	2,		1.19,	-1.03);
+INSERT INTO zonaBa VALUES (5, 		 15,		'P12',	2,		1.11,	-0.96);
