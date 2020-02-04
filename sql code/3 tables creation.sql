@@ -29,6 +29,7 @@ CREATE TABLE item
 	Itm_almin	INT	NOT NULL,
 	Itm_res 	DOUBLE 		NOT NULL,
     Itm_escala VARCHAR(3) NOT NULL DEFAULT '°C',
+	Itm_eliminado BOOLEAN NOT NULL DEFAULT FALSE,
 	PRIMARY KEY(Itm_id)
 ) ENGINE=InnoDB;
 
@@ -88,7 +89,7 @@ CREATE TABLE orden_compra_espec
     OrdEs_mag	VARCHAR(50)	NOT NULL,
 	OrdEs_precioTotal	DOUBLE	NOT NULL,
 	OrdEs_alMax		INT	NOT NULL,
-    OrdEs_alMIN		INT	NOT NULL,
+    OrdEs_alMin		INT	NOT NULL,
 	OrdEs_estado		VARCHAR(50)	NOT NULL,
 	PRIMARY KEY(OrdEs_id)
 ) ENGINE=InnoDB;

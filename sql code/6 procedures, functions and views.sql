@@ -227,7 +227,7 @@ BEGIN
         Itm_let,
 		Itm_mar,
 		Itm_mod,
-		itemItm_magn,
+		Itm_magn,
 		Itm_almax,
 		Itm_almin,
 		Itm_res,
