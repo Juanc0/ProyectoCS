@@ -46,7 +46,7 @@ public class MainView extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         ordenCompra = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        tableClientPurchaseOrders = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
@@ -59,7 +59,7 @@ public class MainView extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTable4 = new javax.swing.JTable();
+        tableAdvisorPurchaseOrders = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jButton4 = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
@@ -226,7 +226,7 @@ public class MainView extends javax.swing.JFrame {
 
         tabs.addTab("Items", items);
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        tableClientPurchaseOrders.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -245,7 +245,7 @@ public class MainView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane5.setViewportView(jTable3);
+        jScrollPane5.setViewportView(tableClientPurchaseOrders);
 
         jButton2.setText("Actualizar");
 
@@ -322,7 +322,7 @@ public class MainView extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Elemntos");
 
-        jTable4.setModel(new javax.swing.table.DefaultTableModel(
+        tableAdvisorPurchaseOrders.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -341,7 +341,7 @@ public class MainView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane6.setViewportView(jTable4);
+        jScrollPane6.setViewportView(tableAdvisorPurchaseOrders);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -565,11 +565,11 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
-    private javax.swing.JTable jTable4;
     private javax.swing.JTable jTable5;
     private javax.swing.JTable jTable6;
     private javax.swing.JPanel ordenCompra;
+    public javax.swing.JTable tableAdvisorPurchaseOrders;
+    public javax.swing.JTable tableClientPurchaseOrders;
     public javax.swing.JTable tableItems;
     public javax.swing.JTable tableItemsClient;
     public javax.swing.JTabbedPane tabs;

@@ -6,12 +6,16 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import model.ClientQueries;
 import model.ItemClientModel;
 import model.ItemClientQueries;
 import model.ItemModel;
 import model.ItemQueries;
 import model.Persistence;
+import model.PurchaseOrderModel;
+import model.PurchaseOrderQueries;
 import model.UserModel;
+import model.UserQueries;
 import view.MainView;
 
 public class MainController implements ActionListener, MouseListener{
@@ -21,9 +25,13 @@ public class MainController implements ActionListener, MouseListener{
     private int selectedItemClientId = 0;
     private ArrayList<ItemModel> items;
     private ArrayList<ItemClientModel> itemsClient;
+    private ArrayList<PurchaseOrderModel> clientPurchaseOrders;
+    private ArrayList<PurchaseOrderModel> advisorPurchaseOrders;
+    private UserQueries userQueries = new UserQueries();
+    private ClientQueries clientQueries = new ClientQueries();
+    private PurchaseOrderQueries purchaseOrderQueries = new PurchaseOrderQueries();
     private ItemQueries itemQueries = new ItemQueries();
     private ItemClientQueries itemClientQueries = new ItemClientQueries();
-//    private UserQueries userQueries = new UserQueries();
     private MainView mainView = new MainView();
     
     public MainController(UserModel currUser) {
@@ -34,10 +42,15 @@ public class MainController implements ActionListener, MouseListener{
         }
         if(!this.currUser.getIsAdviser()){
             this.mainView.tabs.remove(2);
+        }else{
+            this.refreshAdvisorPurchaseOrdersTable();
         }
         if(this.currUser.getClientId() == 0){
             this.mainView.tabs.remove(1);
             this.mainView.tabs.remove(0);
+        }else{
+            this.refreshItemsListTable();
+            this.refreshClientPurchaseOrdersTable();
         }
         this.mainView.btnProfile.addActionListener(this);
         this.mainView.btnLogout.addActionListener(this);
@@ -54,7 +67,6 @@ public class MainController implements ActionListener, MouseListener{
         this.mainView.setLocationRelativeTo(null);
         this.mainView.setVisible(true);
         this.personalizeView();
-        this.refreshItemsListTable();
     }
     
     private void personalizeView(){
@@ -66,6 +78,50 @@ public class MainController implements ActionListener, MouseListener{
     }
     public void clearItemsClientListTable(){
         ((DefaultTableModel)this.mainView.tableItemsClient.getModel()).setNumRows(0);
+    }
+    public void clearClientPurchaseOrdersTable(){
+        ((DefaultTableModel)this.mainView.tableClientPurchaseOrders.getModel()).setNumRows(0);
+    }
+    public void clearAdvisorPurchaseOrdersTable(){
+        ((DefaultTableModel)this.mainView.tableAdvisorPurchaseOrders.getModel()).setNumRows(0);
+    }
+    public void refreshClientPurchaseOrdersTable(){
+        this.clearClientPurchaseOrdersTable();
+        this.persistence.openConnection("cliente", "clientePassword");
+        this.clientPurchaseOrders = this.purchaseOrderQueries.getClientPurchaseOrders(this.persistence.getConnection(), this.currUser.getClientId());
+        this.persistence.closeConnection();
+        DefaultTableModel model = (DefaultTableModel) this.mainView.tableClientPurchaseOrders.getModel();
+        this.persistence.openConnection("cliente", "clientePassword");
+        for (PurchaseOrderModel purchaseOrder : this.clientPurchaseOrders) {
+            model.addRow(new Object[]{
+                purchaseOrder.getId(),
+                purchaseOrder.getDate(),
+                this.userQueries.getUser(this.persistence.getConnection(), purchaseOrder.getAdvisorId()).getName(),
+                purchaseOrder.getFinalPrice(),
+                purchaseOrder.getStatus()
+            });
+        }
+        this.mainView.tableClientPurchaseOrders.setModel(model);
+    }
+    public void refreshAdvisorPurchaseOrdersTable(){
+        this.clearAdvisorPurchaseOrdersTable();
+        this.persistence.openConnection("asesor", "asesorPassword");
+        this.advisorPurchaseOrders = this.purchaseOrderQueries.getAdvisorPurchaseOrders(this.persistence.getConnection(), this.currUser.getId());
+        this.persistence.closeConnection();
+        this.persistence.openConnection("asesor", "asesorPassword");
+        DefaultTableModel model = (DefaultTableModel) this.mainView.tableAdvisorPurchaseOrders.getModel();
+        for (PurchaseOrderModel purchaseOrder : this.advisorPurchaseOrders) {
+            model.addRow(new Object[]{
+                purchaseOrder.getId(),
+                purchaseOrder.getDate(),
+                this.clientQueries.getClient(this.persistence.getConnection(), purchaseOrder.getClientId()).getCompany(),
+                purchaseOrder.getTotalPrice(),
+                purchaseOrder.getFinalPrice(),
+                purchaseOrder.getStatus()
+            });
+        }
+        this.persistence.closeConnection();
+        this.mainView.tableAdvisorPurchaseOrders.setModel(model);
     }
     
     public void refreshItemsListTable(){
@@ -135,7 +191,7 @@ public class MainController implements ActionListener, MouseListener{
             new CreateItemController(this, this.currUser.getClientId());
         }else if(e.getSource() == this.mainView.btnItemsDelete){
             this.persistence.openConnection("cliente", "clientePassword");
-            this.itemClientQueries.deleteItemsClient(this.persistence.getConnection(), selectedItemClientId);
+            //this.itemClientQueries.deleteItemsClient(this.persistence.getConnection(), selectedItemClientId);
             this.itemQueries.deleteItem(this.persistence.getConnection(), this.selectedItemId);
             this.persistence.closeConnection();
             this.refreshItemsListTable();

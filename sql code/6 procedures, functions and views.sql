@@ -299,17 +299,9 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS getItemClient;
 DELIMITER $$
-CREATE PROCEDURE getItemClient(IN itemId INT, IN clientId INT)
-BEGIN
-	SELECT * FROM item_cliente WHERE ItmC_Itm_id = itemId AND ItmC_Cli_id = clientId ;
-END $$
-DELIMITER ;
-
-DROP PROCEDURE IF EXISTS getItemClient;
-DELIMITER $$
 CREATE PROCEDURE getItemClient(IN itemClienteId INT)
 BEGIN
-	SELECT * FROM item_cliente WHERE ItmC_id = itemClienteId LIMIT 1;
+	SELECT * FROM item_cliente WHERE ItmC_id = itemClienteId AND ItmC_eliminado = FALSE LIMIT 1;
 END $$
 DELIMITER ;
 
@@ -320,7 +312,6 @@ BEGIN
 	SELECT * FROM item_cliente WHERE ItmC_Itm_id = itemId AND ItmC_Cli_id = clientId AND ItmC_eliminado = FALSE;
 END $$
 DELIMITER ;
-
 
 DROP PROCEDURE IF EXISTS createItemClient;
 DELIMITER $$
@@ -387,20 +378,29 @@ BEGIN
 END $$
 DELIMITER ;
 
-DROP PROCEDURE IF EXISTS deleteItemsClient;
-DELIMITER $$
-CREATE PROCEDURE deleteItemsClient(IN itemId INT)
-BEGIN
-	UPDATE item_cliente SET ItmC_eliminado = True WHERE ItmC_Itm_id = itemId;
-END $$
-DELIMITER ;
-
-
 DROP PROCEDURE IF EXISTS recoverItemClient;
 DELIMITER $$
 CREATE PROCEDURE recoverItemClient(IN id INT)
 BEGIN
 	UPDATE item_cliente SET ItmC_eliminado = false WHERE ItmC_id = id;
+END $$
+DELIMITER ;
+
+/* ########## ########## ########## ########## ########## Orden de compra ########## ########## ########## ########## ########## */
+
+DROP PROCEDURE IF EXISTS getClientPurchaseOrders;
+DELIMITER $$
+CREATE PROCEDURE getClientPurchaseOrders(IN clientId INT)
+BEGIN
+	SELECT * FROM orden_compra WHERE Ordc_Cli_id = clientId;
+END $$
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS getAdvisorPurchaseOrders;
+DELIMITER $$
+CREATE PROCEDURE getAdvisorPurchaseOrders(IN advisorId INT)
+BEGIN
+	SELECT * FROM orden_compra WHERE Ordc_Ases_id = advisorId;
 END $$
 DELIMITER ;
 
